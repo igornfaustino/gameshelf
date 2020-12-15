@@ -1,7 +1,9 @@
 import Head from "next/head";
+import { useTranslation } from "../app/config/i18next";
 import styles from "../app/styles/Home.module.css";
 
 export default function Home() {
+  const { t } = useTranslation();
   return (
     <div className={styles.container}>
       <Head>
@@ -11,6 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
+          {t("title")}
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
