@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Footer from '../app/components/elements/Footer';
+import Header from '../app/components/elements/Header';
 import { useTranslation } from '../app/config/i18next';
 import styles from '../app/styles/Home.module.css';
 
@@ -12,6 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>
           {t('title')}
