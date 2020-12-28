@@ -9,6 +9,7 @@ const StyledFooter = styled.footer`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-size: 0.9rem;
 `;
 
 const Footer = () => {

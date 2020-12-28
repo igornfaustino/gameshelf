@@ -19,6 +19,7 @@ const Main = styled.main`
     100vh - ${props.theme.constants.headerHeight} -
       ${props.theme.constants.footerHeight}
   )`};
+  display: flex;
 `;
 
 const BaseLayout = ({ title = 'Gameshelf', children }: Props) => {
