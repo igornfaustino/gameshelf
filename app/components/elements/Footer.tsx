@@ -4,8 +4,11 @@ import Link from './Link';
 
 const StyledFooter = styled.footer`
   width: 100%;
-  padding: 24px 50px;
   text-align: center;
+  height: ${(props) => props.theme.constants.footerHeight};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Footer = () => {
