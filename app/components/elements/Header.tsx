@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 import Brand from './Brand';
 import Clickable from './Clickable';
@@ -20,9 +21,11 @@ const StyledHeader = styled.header`
 export const Header = () => {
   return (
     <StyledHeader>
-      <Clickable>
-        <Brand />
-      </Clickable>
+      <Link href="/" passHref>
+        <Clickable>
+          <Brand />
+        </Clickable>
+      </Link>
 
       <ContextMenu />
     </StyledHeader>
