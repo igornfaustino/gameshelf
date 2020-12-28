@@ -5,6 +5,7 @@ import BaseLayout from './BaseLayout';
 type Props = {
   children: React.ReactNode;
   title?: string;
+  pageName?: string;
 };
 
 const Container = styled.div`
@@ -20,11 +21,23 @@ const Content = styled.div`
   width: 500px;
 `;
 
-const SmallContentLayout = ({ children, title }: Props) => {
+const PageName = styled.h2`
+  margin: 0;
+  margin-bottom: 0.5em;
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.35;
+`;
+
+const SmallContentLayout = ({ children, title, pageName }: Props) => {
   return (
     <BaseLayout title={title}>
       <Container>
-        <Content>{children}</Content>
+        <Content>
+          {!!pageName && <PageName>{pageName}</PageName>}
+          {children}
+        </Content>
       </Container>
     </BaseLayout>
   );
