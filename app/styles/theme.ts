@@ -1,4 +1,24 @@
-export const defaultTheme = {
+export type ThemeType = {
+  colors: {
+    link: string;
+    header: string;
+    primary: string;
+    background: string;
+    fontWhite: string;
+    fontWhiter: string;
+    fontBlack: string;
+    fontBlacker: string;
+    inputShadow: string;
+    error: string;
+    contentArea: string;
+  };
+  constants: {
+    headerHeight: string;
+    footerHeight: string;
+  };
+};
+
+export const defaultTheme: ThemeType = {
   colors: {
     link: '#1DA57A',
     header: '#444',
