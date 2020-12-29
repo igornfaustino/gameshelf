@@ -17,12 +17,12 @@ body {
 }
 
 ::-moz-selection { /* Code for Firefox */
-  color: ${(props) => props.theme.colors.fontWhite};
+  color: ${(props) => props.theme.colors.fontWhiter};
   background: ${(props) => props.theme.colors.primary};
 }
 
 ::selection {
-  color: ${(props) => props.theme.colors.fontWhite};
+  color: ${(props) => props.theme.colors.fontWhiter};
   background: ${(props) => props.theme.colors.primary};
 }
 `;
