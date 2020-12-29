@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  background: #fff;
+  background: ${(props) => props.theme.colors.contentArea};
   padding: 24px;
   width: 500px;
 `;
