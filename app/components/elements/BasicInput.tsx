@@ -6,12 +6,14 @@ type Props = React.DetailedHTMLProps<
   HTMLInputElement
 > & { error?: string; ref: React.ForwardedRef<unknown> };
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   width: 100%;
+  height: ${(props) => props.theme.constants.inputHeight};
   padding: 8px;
   border: 1px solid #d9d9d9;
   border-color: ${(props) => props.error && props.theme.colors.error};
   border-radius: 2px;
+  transition: all 0.3s;
 
   &:hover {
     border-color: ${(props) => props.theme.colors.primary};

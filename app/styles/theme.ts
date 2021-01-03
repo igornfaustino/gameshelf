@@ -15,6 +15,7 @@ export type ThemeType = {
   constants: {
     headerHeight: string;
     footerHeight: string;
+    inputHeight: string;
   };
 };
 
@@ -35,6 +36,7 @@ export const defaultTheme: ThemeType = {
   constants: {
     headerHeight: '64px',
     footerHeight: '83px',
+    inputHeight: '33px',
   },
 };
 

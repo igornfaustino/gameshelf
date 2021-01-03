@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Brand from './Brand';
 import Clickable from './Clickable';
 import ContextMenu from './ContextMenu';
+import Search from './Search';
 
 const StyledHeader = styled.header`
   background-color: ${(props) => props.theme.colors.header};

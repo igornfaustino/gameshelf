@@ -2,7 +2,8 @@
   "placeholder": {
     "email": "Digite o seu email",
     "password": "Digite a sua senha",
-    "name": "Digite o seu nome"
+    "name": "Digite o seu nome",
+    "search": "Pesquise jogos pelo nome"
   },
   "error": {
     "required": "Este campo é obrigatório",

@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '../app/components/elements/Button';
 import Input from '../app/components/elements/Input';
 import SmallContentLayout from '../app/components/templates/SmallContentLayout';
-import { useTranslation, Trans } from '../app/config/i18next';
+import { useTranslation } from '../app/config/i18next';
 import StyledLink from '../app/components/elements/Link';
 import Text from '../app/components/elements/Text';
 

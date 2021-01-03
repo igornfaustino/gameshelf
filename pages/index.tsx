@@ -1,3 +1,4 @@
+import Search from '../app/components/elements/Search';
 import BaseLayout from '../app/components/templates/BaseLayout';
 import { useTranslation } from '../app/config/i18next';
 
