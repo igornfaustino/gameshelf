@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
-> & { error?: string };
+> & { error?: string; ref: React.ForwardedRef<unknown> };
 
 const StyledInput = styled.input`
   width: 100%;
@@ -29,7 +29,6 @@ const StyledInput = styled.input`
 const ErrorMessage = styled.span`
   color: ${(props) => props.theme.colors.error};
   font-size: 0.875rem;
-  text-transform: capitalize;
 `;
 
 const InputGroup = styled.div`
@@ -37,15 +36,15 @@ const InputGroup = styled.div`
   margin-bottom: 8px;
 `;
 
-const BasicInput = (props: Props) => {
+const BasicInput = React.forwardRef((props: Props, ref) => {
   const { error } = props;
 
   return (
     <InputGroup>
-      <StyledInput {...props} />
+      <StyledInput {...props} ref={ref} />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </InputGroup>
   );
-};
+});
 
 export default BasicInput;

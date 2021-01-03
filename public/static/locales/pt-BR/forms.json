@@ -1,0 +1,11 @@
+{
+  "placeholder": {
+    "email": "Digite o seu email",
+    "password": "Digite a sua senha"
+  },
+  "error": {
+    "required": "Este campo é obrigatório",
+    "email invalid": "Deve ser um email valido",
+    "minimum length": "Este campo deve conter pelo menos {{min}} caracteres"
+  }
+}
