@@ -1,4 +1,8 @@
 {
   "title": "Meu Next App",
-  "login": "Entrar"
+  "login": "Entrar",
+  "register": "Crie uma nova conta",
+  "or": "ou",
+  "not registered": "Crie uma conta gratuita",
+  "go to login": "Entre com uma conta já existente"
 }

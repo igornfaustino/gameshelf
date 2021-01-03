@@ -1,7 +1,8 @@
 {
   "placeholder": {
     "email": "Digite o seu email",
-    "password": "Digite a sua senha"
+    "password": "Digite a sua senha",
+    "name": "Digite o seu nome"
   },
   "error": {
     "required": "Este campo é obrigatório",
