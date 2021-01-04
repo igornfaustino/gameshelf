@@ -43,7 +43,7 @@ const BasicInput = React.forwardRef((props: Props, ref) => {
 
   return (
     <InputGroup>
-      <StyledInput {...props} ref={ref} />
+      <StyledInput {...props} ref={ref} data-testid="input" />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </InputGroup>
   );
