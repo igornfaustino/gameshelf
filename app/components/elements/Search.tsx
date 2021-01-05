@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import { StyledInput } from './BasicInput';
@@ -45,11 +46,15 @@ const SearchButton = styled.button`
 
 const Search = () => {
   const { t } = useTranslation('forms');
+  const router = useRouter();
   const { register, handleSubmit } = useForm();
+
+  const handleSearch = ({ search }) => router.push({ pathname: '/search', query: { q: search } });
+
   return (
-    <SearchForm onSubmit={handleSubmit((data) => console.log(data))}>
+    <SearchForm onSubmit={handleSubmit(handleSearch)}>
       <SearchInput name="search" ref={register} placeholder={t('forms:placeholder.search')} />
-      <SearchButton>
+      <SearchButton type="submit">
         <SearchIcon />
       </SearchButton>
     </SearchForm>
