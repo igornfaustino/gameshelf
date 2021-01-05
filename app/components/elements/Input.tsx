@@ -10,14 +10,22 @@ type Props = React.DetailedHTMLProps<
 const Input = React.forwardRef(({ error, ...props }: Props, ref) => {
   const { t } = useTranslation('forms');
 
-  if (!error) return <BasicInput ref={ref} {...props} />;
+  let SelectedInput;
+
+  switch (props.type) {
+    default:
+      SelectedInput = BasicInput;
+      break;
+  }
+
+  if (!error) return <SelectedInput ref={ref} {...props} />;
 
   const [errorKey, optionsStr] = error.split('#');
 
-  if (!optionsStr) return <BasicInput ref={ref} {...props} error={t(`error.${errorKey}`)} />;
-  console.log(optionsStr);
+  if (!optionsStr) return <SelectedInput ref={ref} {...props} error={t(`error.${errorKey}`)} />;
+
   const options = JSON.parse(optionsStr);
-  return <BasicInput ref={ref} {...props} error={t(`error.${errorKey}`, options)} />;
+  return <SelectedInput ref={ref} {...props} error={t(`error.${errorKey}`, options)} />;
 });
 
 export default Input;

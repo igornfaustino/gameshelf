@@ -12,4 +12,14 @@ describe('BasicInput', () => {
     );
     expect(screen.getByTestId('input')).toBeInTheDocument();
   });
+
+  it('shows error properly', () => {
+    const errorMessage = 'simple error message';
+    render(
+      <ThemeProvider theme={defaultTheme}>
+        <BasicInput error={errorMessage} />
+      </ThemeProvider>
+    );
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
+  });
 });
