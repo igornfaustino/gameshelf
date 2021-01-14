@@ -11,6 +11,7 @@ export type ThemeType = {
     inputShadow: string;
     error: string;
     contentArea: string;
+    cardColor: string;
   };
   constants: {
     headerHeight: string;
@@ -32,6 +33,7 @@ export const defaultTheme: ThemeType = {
     inputShadow: 'rgba(29, 165, 122, 0.2)',
     error: 'red',
     contentArea: '#fff',
+    cardColor: '#fff',
   },
   constants: {
     headerHeight: '64px',

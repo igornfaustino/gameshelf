@@ -48,5 +48,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'react/require-default-props': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

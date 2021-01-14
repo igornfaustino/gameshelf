@@ -9,7 +9,7 @@ type Props = {
 
 const selectBgColor = (props: Props) => {
   if (props.primary) return props.theme.colors.primary;
-  return props.theme.colors.primary;
+  return '#fff';
 };
 
 const selectTextColor = (props: Props) => {

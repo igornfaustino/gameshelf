@@ -1,5 +1,8 @@
+import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
+
 import { appWithTranslation } from '../app/config/i18next';
+import { useApollo } from '../app/config/apolloClient';
 import defaultTheme from '../app/styles/theme';
 
 const GlobalStyle = createGlobalStyle`
@@ -28,11 +31,15 @@ body {
 `;
 
 function MyApp({ Component, pageProps }) {
+  const apolloClient = useApollo(pageProps.initialApolloState);
+
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <ApolloProvider client={apolloClient}>
+      <ThemeProvider theme={defaultTheme}>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ApolloProvider>
   );
 }
 
