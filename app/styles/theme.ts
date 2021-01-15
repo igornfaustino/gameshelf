@@ -3,6 +3,8 @@ export type ThemeType = {
     link: string;
     header: string;
     primary: string;
+    primaryLight: string;
+    primaryDark: string;
     background: string;
     fontWhite: string;
     fontWhiter: string;
@@ -24,7 +26,9 @@ export const defaultTheme: ThemeType = {
   colors: {
     link: '#1DA57A',
     header: '#444',
-    primary: '#1DA57A',
+    primary: '#43a047',
+    primaryLight: '#76d275',
+    primaryDark: '#00701a',
     background: '#f0f2f5',
     fontWhite: '#e5e5e5',
     fontWhiter: '#fff',

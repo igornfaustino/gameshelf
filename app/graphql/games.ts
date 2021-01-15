@@ -24,3 +24,13 @@ export const SEARCH_COUNT_QUERY = gql`
     countGames(search: $search, platforms: $platforms, genres: $genres)
   }
 `;
+
+export const ALL_PLATFORMS = gql`
+  query platforms {
+    platforms {
+      id
+      name
+      abbreviation
+    }
+  }
+`;

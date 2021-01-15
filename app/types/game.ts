@@ -1,3 +1,9 @@
+export type Platform = {
+  id: any;
+  name: string;
+  abbreviation: string;
+};
+
 export type GameType = {
   id: any;
   name: string;
@@ -6,9 +12,5 @@ export type GameType = {
     id: any;
     name: string;
   };
-  platforms: {
-    id: any;
-    name: string;
-    abbreviation: string;
-  };
+  platforms: Platform[];
 };
