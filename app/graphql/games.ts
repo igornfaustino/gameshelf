@@ -34,3 +34,12 @@ export const ALL_PLATFORMS = gql`
     }
   }
 `;
+
+export const ALL_GENRES = gql`
+  query platforms {
+    genres {
+      id
+      name
+    }
+  }
+`;

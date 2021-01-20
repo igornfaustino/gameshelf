@@ -3,7 +3,9 @@
     "email": "Digite o seu email",
     "password": "Digite a sua senha",
     "name": "Digite o seu nome",
-    "search": "Pesquise jogos pelo nome"
+    "search": "Pesquise jogos pelo nome",
+    "platform": "Filtre por plataformas",
+    "genre": "Filtre por gêneros"
   },
   "error": {
     "required": "Este campo é obrigatório",

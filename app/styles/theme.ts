@@ -24,7 +24,7 @@ export type ThemeType = {
 
 export const defaultTheme: ThemeType = {
   colors: {
-    link: '#1DA57A',
+    link: '#43a047',
     header: '#444',
     primary: '#43a047',
     primaryLight: '#76d275',

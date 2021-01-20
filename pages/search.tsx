@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 
-import { GameType, Platform } from '../app/types/game';
+import { GameType, Platform, Genre } from '../app/types/game';
 import Game from '../app/components/elements/Game';
-import { SEARCH_GAME_QUERY, SEARCH_COUNT_QUERY, ALL_PLATFORMS } from '../app/graphql/games';
+import {
+  SEARCH_GAME_QUERY,
+  SEARCH_COUNT_QUERY,
+  ALL_PLATFORMS,
+  ALL_GENRES,
+} from '../app/graphql/games';
 import DashboardLayout from '../app/components/templates/DashboardLayout';
 import GamesArea from '../app/components/elements/GamesArea';
 import Pagination from '../app/components/elements/Pagination';
-import { initializeApollo } from '../app/config/apolloClient';
 import GameFilters, { FilterSubmitCallback } from '../app/components/elements/GameFilters';
 
 type GameQueryType = {
@@ -23,12 +27,18 @@ type PlatformQueryType = {
   platforms: Platform[];
 };
 
+type GenreQueryType = {
+  genres: Genre[];
+};
+
 const Search = (props) => {
   const router = useRouter();
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(30);
   const [platformIds, setPlatformIds] = useState<number[] | undefined>(undefined);
-  const { data } = useQuery<PlatformQueryType>(ALL_PLATFORMS);
+  const [genreIds, setGenreIds] = useState<number[] | undefined>(undefined);
+  const { data: platforms } = useQuery<PlatformQueryType>(ALL_PLATFORMS);
+  const { data: genres } = useQuery<GenreQueryType>(ALL_GENRES);
   const { loading: loadingGames, error: gamesError, data: gamesData } = useQuery<GameQueryType>(
     SEARCH_GAME_QUERY,
     {
@@ -37,6 +47,7 @@ const Search = (props) => {
         limit,
         offset,
         platforms: platformIds,
+        genres: genreIds,
       },
     }
   );
@@ -44,13 +55,18 @@ const Search = (props) => {
     variables: {
       search: router.query.q,
       platforms: platformIds,
+      genres: genreIds,
     },
   });
 
-  // const options = data;
-  const platformOptions = data.platforms.map((platform) => ({
+  const platformOptions = platforms?.platforms.map((platform) => ({
     value: platform.id,
     label: platform.name,
+  }));
+
+  const genreOptions = genres?.genres.map((genre) => ({
+    value: genre.id,
+    label: genre.name,
   }));
 
   const onPageChange = (page: number) => {
@@ -59,14 +75,25 @@ const Search = (props) => {
   };
 
   const onFilterSubmit = (values: FilterSubmitCallback) => {
-    console.log(values);
     setPlatformIds(values.platforms);
+    setGenreIds(values.genres);
   };
+
+  useEffect(() => {
+    setOffset(0);
+    setGenreIds(undefined);
+    setPlatformIds(undefined);
+  }, [router.query.q]);
 
   console.log({ gamesData, loading: loadingGames, error: gamesError, countData });
   return (
     <DashboardLayout>
-      <GameFilters platformOptions={platformOptions} onSubmit={onFilterSubmit} />
+      <GameFilters
+        query={router.query.q}
+        platformOptions={platformOptions}
+        genreOptions={genreOptions}
+        onSubmit={onFilterSubmit}
+      />
       <h1>search {router.query.q}</h1>
       <GamesArea>
         {gamesData?.game?.map((game) => (
@@ -82,20 +109,5 @@ const Search = (props) => {
     </DashboardLayout>
   );
 };
-
-export async function getStaticProps() {
-  const apolloClient = initializeApollo();
-
-  await apolloClient.query({
-    query: ALL_PLATFORMS,
-  });
-
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
-    revalidate: 60,
-  };
-}
 
 export default Search;

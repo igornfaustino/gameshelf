@@ -4,12 +4,14 @@ import { ThemeType } from '../../styles/theme';
 type Props = {
   textVariant: string;
   primary?: boolean;
+  white?: boolean;
   theme: ThemeType;
 };
 
 const selectBgColor = (props: Props) => {
   if (props.primary) return props.theme.colors.primary;
-  return '#fff';
+  if (props.white) return '#fff';
+  return props.theme.colors.primary;
 };
 
 const selectTextColor = (props: Props) => {

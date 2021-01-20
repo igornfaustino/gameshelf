@@ -29,6 +29,7 @@ const Pagination = (props: Props) => {
       <Button
         key={i}
         primary={activeButton === i}
+        white={activeButton !== i}
         textVariant={activeButton === i && 'light'}
         onClick={() => onPageChange(i)}
       >

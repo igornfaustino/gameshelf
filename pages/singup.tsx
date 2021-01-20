@@ -16,7 +16,7 @@ const schema = yup.object().shape({
   password: yup.string().min(6, 'minimum length#{"min": 6}').required('required'),
 });
 
-const Login = () => {
+const Singup = () => {
   const { t } = useTranslation(['pagetitles', 'common', 'forms', 'button']);
   const { register, errors, handleSubmit } = useForm({
     mode: 'all',
@@ -63,4 +63,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Singup;
