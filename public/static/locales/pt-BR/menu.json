@@ -1,4 +1,5 @@
 {
   "login": "Entrar",
-  "singup": "Registrar"
+  "singup": "Registrar",
+  "logout": "Sair"
 }

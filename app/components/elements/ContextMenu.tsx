@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import { useTranslation } from '../../config/i18next';
@@ -25,8 +26,15 @@ const Horizontal = styled.div`
 `;
 
 const ContextMenu = () => {
+  const router = useRouter();
   const [context, setContext] = useState('');
   const { t } = useTranslation('menu');
+
+  const onLogout = () => {
+    window.localStorage.clear();
+    setContext(OFFLINE_ROUTE_KEY);
+    router.push('/');
+  };
 
   useEffect(() => {
     const token = window.localStorage.getItem('auth');
@@ -47,6 +55,11 @@ const ContextMenu = () => {
             </Clickable>
           </Link>
         ))}
+        {context === ONLINE_ROUTE_KEY && (
+          <Clickable onClick={onLogout}>
+            <MenuItem>{t('logout')}</MenuItem>
+          </Clickable>
+        )}
       </div>
     </Horizontal>
   );
