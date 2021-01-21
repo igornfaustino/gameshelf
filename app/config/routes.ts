@@ -18,8 +18,12 @@ export const offlineRoutes: Route[] = [
   },
 ];
 
+export const onlineRoutes: Route[] = [];
+
 export const contextMenu: ContextMenu = {
   offlineRoutes,
+  onlineRoutes,
 };
 
 export const OFFLINE_ROUTE_KEY = 'offlineRoutes';
+export const ONLINE_ROUTE_KEY = 'onlineRoutes';

@@ -1,8 +1,10 @@
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+
+import Link from 'next/link';
 import styled from 'styled-components';
+
 import { useTranslation } from '../../config/i18next';
-import { contextMenu, OFFLINE_ROUTE_KEY } from '../../config/routes';
+import { contextMenu, OFFLINE_ROUTE_KEY, ONLINE_ROUTE_KEY } from '../../config/routes';
 import Clickable from './Clickable';
 import Search from './Search';
 
@@ -27,9 +29,9 @@ const ContextMenu = () => {
   const { t } = useTranslation('menu');
 
   useEffect(() => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem('auth');
     if (!token) return setContext(OFFLINE_ROUTE_KEY);
-    return setContext(OFFLINE_ROUTE_KEY);
+    return setContext(ONLINE_ROUTE_KEY);
   }, []);
 
   if (!context) return <></>;
