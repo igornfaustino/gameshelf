@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { useTranslation, Trans } from '../../config/i18next';
 import Link from './Link';
 

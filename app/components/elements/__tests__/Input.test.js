@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import Input from '../Input';
+
 import defaultTheme from '../../../styles/theme';
+import Input from '../Input';
 
 jest.mock('../../../config/i18next', () => ({
   useTranslation: () => {

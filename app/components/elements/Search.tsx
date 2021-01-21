@@ -1,11 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
 
-import { StyledInput } from './BasicInput';
 import SearchIcon from '../../assets/icons/search.svg';
 import { useTranslation } from '../../config/i18next';
+import { StyledInput } from './BasicInput';
 
 const SearchInput = styled(StyledInput)`
   border-radius: 2px 0px 0px 2px;

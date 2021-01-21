@@ -1,5 +1,7 @@
 import React from 'react';
-import Select from 'react-select';
+
+import Select, { OptionsType } from 'react-select';
+
 import defaultTheme from '../../styles/theme';
 
 type Props = {
@@ -7,7 +9,7 @@ type Props = {
   isMulti?: boolean;
   placeholder?: string;
   onChange(): void;
-  value: any;
+  value: { value: string; label: string } | OptionsType<{ value: string; label: string }>;
 };
 
 const SelectInput = (props: Props) => {

@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import BasicInput from '../BasicInput';
+
 import defaultTheme from '../../../styles/theme';
+import BasicInput from '../BasicInput';
 
 describe('BasicInput', () => {
   it('renders the input', () => {

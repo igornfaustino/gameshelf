@@ -1,6 +1,8 @@
-import Head from 'next/head';
 import { ReactNode } from 'react';
+
+import Head from 'next/head';
 import styled from 'styled-components';
+
 import Footer from '../elements/Footer';
 import Header from '../elements/Header';
 

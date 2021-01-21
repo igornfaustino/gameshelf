@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+
 import { useTranslation } from '../../config/i18next';
 import Button from './Button';
-
 import SelectInput from './SelectInput.';
 
 const FilterGroup = styled.form`
