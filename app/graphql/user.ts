@@ -16,7 +16,12 @@ export const CREATE_USER = gql`
 export const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-      token
+      ... on Authorized {
+        token
+      }
+      ... on Unauthorized {
+        reason
+      }
     }
   }
 `;

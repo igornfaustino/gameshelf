@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import Button from '../app/components/elements/Button';
@@ -23,21 +24,39 @@ const schema = yup.object().shape({
 const Login = () => {
   const router = useRouter();
   const { t } = useTranslation(['pagetitles', 'common', 'forms']);
-  const [login, { data }] = useMutation(LOGIN);
-  const { register, errors, handleSubmit } = useForm({
+  const [login, { data }] = useMutation(LOGIN, {
+    onError: () => {
+      toast.error(t('common:errors.something_went_wrong'));
+    },
+  });
+  const { register, errors, handleSubmit, reset } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
 
   const handleFormSubmit = (values) => {
+    reset(values);
     login({ variables: { ...values } });
   };
 
+  const authUser = useCallback(
+    (token) => {
+      window.localStorage.setItem('auth', token);
+      router.push('/');
+    },
+    [router]
+  );
+
   useEffect(() => {
-    if (!data || !data.login?.token) return;
-    window.localStorage.setItem('auth', data.login.token);
-    router.push('/');
-  }, [data, router]);
+    if (!data || !data.login) return;
+    if (data.login.__typename === 'Authorized') {
+      authUser(data.login.token);
+      return;
+    }
+    if (data.login.__typename === 'Unauthorized') {
+      toast.error(t(`common:errors.${data.login.reason}`));
+    }
+  }, [authUser, data, t]);
 
   return (
     <SmallContentLayout title={t('pagetitles:login')} pageName={t('common:login')}>
