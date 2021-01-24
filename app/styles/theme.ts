@@ -42,7 +42,7 @@ export const defaultTheme: ThemeType = {
   constants: {
     headerHeight: '64px',
     footerHeight: '83px',
-    inputHeight: '33px',
+    inputHeight: '37px',
   },
 };
 

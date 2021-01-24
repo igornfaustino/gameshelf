@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const GamesArea = styled.div`
+import Skeleton from './Skeleton';
+
+const GamesAreaWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 262px));
   grid-gap: 16px;
@@ -16,5 +18,17 @@ const GamesArea = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
   }
 `;
+
+const GamesArea = (props) => {
+  const { children, loading, limit } = props;
+  if (loading) {
+    const gamesPlaceholder = [];
+    for (let i = 0; i < limit; i++) {
+      gamesPlaceholder.push(<Skeleton paddingTop="150%" key={i} />);
+    }
+    return <GamesAreaWrapper>{gamesPlaceholder}</GamesAreaWrapper>;
+  }
+  return <GamesAreaWrapper>{children}</GamesAreaWrapper>;
+};
 
 export default GamesArea;

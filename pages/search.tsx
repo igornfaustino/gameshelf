@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/client';
 
-import { GameType, Platform, Genre } from '../app/types/game';
+import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
+
 import Game from '../app/components/elements/Game';
+import GameFilters, { FilterSubmitCallback } from '../app/components/elements/GameFilters';
+import GamesArea from '../app/components/elements/GamesArea';
+import Pagination from '../app/components/elements/Pagination';
+import DashboardLayout from '../app/components/templates/DashboardLayout';
 import {
   SEARCH_GAME_QUERY,
   SEARCH_COUNT_QUERY,
   ALL_PLATFORMS,
   ALL_GENRES,
 } from '../app/graphql/games';
-import DashboardLayout from '../app/components/templates/DashboardLayout';
-import GamesArea from '../app/components/elements/GamesArea';
-import Pagination from '../app/components/elements/Pagination';
-import GameFilters, { FilterSubmitCallback } from '../app/components/elements/GameFilters';
+import { GameType, Platform, Genre } from '../app/types/game';
 
 type GameQueryType = {
   game: GameType[];
@@ -37,8 +38,8 @@ const Search = (props) => {
   const [limit, setLimit] = useState(30);
   const [platformIds, setPlatformIds] = useState<number[] | undefined>(undefined);
   const [genreIds, setGenreIds] = useState<number[] | undefined>(undefined);
-  const { data: platforms } = useQuery<PlatformQueryType>(ALL_PLATFORMS);
-  const { data: genres } = useQuery<GenreQueryType>(ALL_GENRES);
+  const { data: platforms, loading: platformLoading } = useQuery<PlatformQueryType>(ALL_PLATFORMS);
+  const { data: genres, loading: genreLoading } = useQuery<GenreQueryType>(ALL_GENRES);
   const { loading: loadingGames, error: gamesError, data: gamesData } = useQuery<GameQueryType>(
     SEARCH_GAME_QUERY,
     {
@@ -89,13 +90,14 @@ const Search = (props) => {
   return (
     <DashboardLayout>
       <GameFilters
+        loading={platformLoading || genreLoading}
         query={router.query.q}
         platformOptions={platformOptions}
         genreOptions={genreOptions}
         onSubmit={onFilterSubmit}
       />
       <h1>search {router.query.q}</h1>
-      <GamesArea>
+      <GamesArea loading={loadingGames} limit={limit}>
         {gamesData?.game?.map((game) => (
           <Game key={game.id} {...game} />
         ))}

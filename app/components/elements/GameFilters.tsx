@@ -4,8 +4,10 @@ import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { useTranslation } from '../../config/i18next';
+import defaultTheme from '../../styles/theme';
 import Button from './Button';
 import SelectInput from './SelectInput.';
+import Skeleton from './Skeleton';
 
 const FilterGroup = styled.form`
   display: flex;
@@ -14,7 +16,7 @@ const FilterGroup = styled.form`
 `;
 
 const ButtonWrapper = styled.div`
-  height: 38px;
+  height: ${(props) => props.theme.constants.inputHeight};
   width: 60px;
 
   button {
@@ -37,11 +39,12 @@ type Props = {
   genreOptions: { value: string; label: string }[];
   onSubmit(submitCallback): void;
   query: string | string[];
+  loading?: boolean;
 };
 
 const GameFilters = (props: Props) => {
   const { t } = useTranslation(['button', 'forms']);
-  const { platformOptions, onSubmit, genreOptions, query } = props;
+  const { platformOptions, onSubmit, genreOptions, query, loading } = props;
   const { control, handleSubmit, reset } = useForm();
 
   const handleFormSubmit = ({ platform, genre }) => {
@@ -63,39 +66,51 @@ const GameFilters = (props: Props) => {
   return (
     <FilterGroup onSubmit={handleSubmit(handleFormSubmit)}>
       <SelectWrapper>
-        <Controller
-          control={control}
-          name="platform"
-          render={({ onChange, value }) => (
-            <SelectInput
-              options={platformOptions}
-              isMulti
-              onChange={onChange}
-              value={value}
-              placeholder={t('forms:placeholder.platform')}
-            />
-          )}
-        />
+        {loading ? (
+          <Skeleton height={defaultTheme.constants.inputHeight} />
+        ) : (
+          <Controller
+            control={control}
+            name="platform"
+            render={({ onChange, value }) => (
+              <SelectInput
+                options={platformOptions}
+                isMulti
+                onChange={onChange}
+                value={value}
+                placeholder={t('forms:placeholder.platform')}
+              />
+            )}
+          />
+        )}
       </SelectWrapper>
       <SelectWrapper>
-        <Controller
-          control={control}
-          name="genre"
-          render={({ onChange, value }) => (
-            <SelectInput
-              options={genreOptions}
-              isMulti
-              onChange={onChange}
-              value={value}
-              placeholder={t('forms:placeholder.genre')}
-            />
-          )}
-        />
+        {loading ? (
+          <Skeleton height={defaultTheme.constants.inputHeight} />
+        ) : (
+          <Controller
+            control={control}
+            name="genre"
+            render={({ onChange, value }) => (
+              <SelectInput
+                options={genreOptions}
+                isMulti
+                onChange={onChange}
+                value={value}
+                placeholder={t('forms:placeholder.genre')}
+              />
+            )}
+          />
+        )}
       </SelectWrapper>
       <ButtonWrapper>
-        <Button primary textVariant="light" block>
-          {t('button:filter')}
-        </Button>
+        {loading ? (
+          <Skeleton height={defaultTheme.constants.inputHeight} />
+        ) : (
+          <Button primary textVariant="light" block>
+            {t('button:filter')}
+          </Button>
+        )}
       </ButtonWrapper>
     </FilterGroup>
   );
