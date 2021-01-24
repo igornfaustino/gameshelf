@@ -4,5 +4,10 @@
   "register": "Crie uma nova conta",
   "or": "ou",
   "not registered": "Crie uma conta gratuita",
-  "go to login": "Entre com uma conta já existente"
+  "go to login": "Entre com uma conta já existente",
+  "user created": "Usuário criado com sucesso",
+  "errors": {
+    "duplicate_user": "Game Over! Usuário já cadastrado!",
+    "something_went_wrong": "Algo deu errado, tente novamente mais tarde"
+  }
 }

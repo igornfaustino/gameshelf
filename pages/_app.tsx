@@ -1,9 +1,12 @@
 import { ApolloProvider } from '@apollo/client';
+import { ToastContainer } from 'react-toastify';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-import { appWithTranslation } from '../app/config/i18next';
 import { useApollo } from '../app/config/apolloClient';
+import { appWithTranslation } from '../app/config/i18next';
 import defaultTheme from '../app/styles/theme';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -38,6 +41,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyle />
         <Component {...pageProps} />
+        <ToastContainer />
       </ThemeProvider>
     </ApolloProvider>
   );

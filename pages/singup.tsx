@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import Button from '../app/components/elements/Button';
@@ -23,22 +24,41 @@ const schema = yup.object().shape({
 
 const Singup = () => {
   const router = useRouter();
-  const [createUser, { data }] = useMutation(CREATE_USER);
   const { t } = useTranslation(['pagetitles', 'common', 'forms', 'button']);
-  const { register, errors, handleSubmit } = useForm({
+  const [createUser, { data }] = useMutation(CREATE_USER, {
+    onError: () => {
+      toast.error(t('common:errors.something_went_wrong'));
+    },
+  });
+  const { register, errors, handleSubmit, reset } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
 
   const handleFormSubmit = (values) => {
+    reset(values);
     createUser({ variables: { ...values } });
   };
 
+  const authUser = useCallback(
+    (token) => {
+      window.localStorage.setItem('auth', token);
+      toast.success(t('common:user created'));
+      router.push('/');
+    },
+    [router, t]
+  );
+
   useEffect(() => {
-    if (!data || !data.createUser?.token) return;
-    window.localStorage.setItem('auth', data.createUser.token);
-    router.push('/');
-  }, [data, router]);
+    if (!data || !data.createUser) return;
+    if (data.createUser.__typename === 'Authorized') {
+      authUser(data.createUser.token);
+      return;
+    }
+    if (data.createUser.__typename === 'Unauthorized') {
+      toast.error(t(`common:errors.${data.createUser.reason}`));
+    }
+  }, [authUser, data, t]);
 
   return (
     <SmallContentLayout title={t('pagetitles:register')} pageName={t('common:register')}>
