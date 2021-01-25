@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 
+import { useQuery } from '@apollo/client';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { useTranslation } from '../../config/i18next';
+import { ALL_GENRES, ALL_PLATFORMS } from '../../graphql/games';
 import defaultTheme from '../../styles/theme';
+import { Genre, Platform } from '../../types/game';
 import Button from './Button';
 import SelectInput from './SelectInput.';
 import Skeleton from './Skeleton';
@@ -35,17 +38,36 @@ export type FilterSubmitCallback = {
 };
 
 type Props = {
-  platformOptions: { value: string; label: string }[];
-  genreOptions: { value: string; label: string }[];
   onSubmit(submitCallback): void;
   query: string | string[];
-  loading?: boolean;
+};
+
+type PlatformQueryType = {
+  platforms: Platform[];
+};
+
+type GenreQueryType = {
+  genres: Genre[];
 };
 
 const GameFilters = (props: Props) => {
   const { t } = useTranslation(['button', 'forms']);
-  const { platformOptions, onSubmit, genreOptions, query, loading } = props;
+  const { data: platforms, loading: platformLoading } = useQuery<PlatformQueryType>(ALL_PLATFORMS);
+  const { data: genres, loading: genreLoading } = useQuery<GenreQueryType>(ALL_GENRES);
+  const { onSubmit, query } = props;
   const { control, handleSubmit, reset } = useForm();
+
+  const loading = platformLoading || genreLoading;
+
+  const platformOptions = platforms?.platforms.map((platform) => ({
+    value: platform.id,
+    label: platform.name,
+  }));
+
+  const genreOptions = genres?.genres.map((genre) => ({
+    value: genre.id,
+    label: genre.name,
+  }));
 
   const handleFormSubmit = ({ platform, genre }) => {
     const platformIds = platform?.map(({ value }) => parseInt(value, 10));
