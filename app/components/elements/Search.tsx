@@ -48,7 +48,11 @@ const SearchButton = styled.button`
 const Search = () => {
   const { t } = useTranslation('forms');
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      search: router.query.q || '',
+    },
+  });
 
   const handleSearch = ({ search }) => router.push({ pathname: '/search', query: { q: search } });
 
