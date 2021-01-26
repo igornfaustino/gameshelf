@@ -1,25 +1,16 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import { GameType } from '../../types/game';
 import Card from './Card';
+import SafeGameImage from './SafeImage';
 
 type Props = GameType;
 
-const GameImage = styled.img`
-  display: block;
-  max-height: 100%;
-  margin: auto;
-  max-height: 352px;
-  width: 100%;
-`;
-
 const Game = (props: Props) => {
-  const { cover, name } = props;
+  const { cover, name, thumbnail } = props;
   return (
     <Card>
-      {cover && <GameImage src={cover} />}
+      {cover && <SafeGameImage src={cover} thumb={thumbnail} />}
       {name}
     </Card>
   );

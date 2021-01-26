@@ -6,6 +6,7 @@ export const SEARCH_GAME_QUERY = gql`
       id
       name
       cover
+      thumbnail
       genres {
         id
         name

@@ -13,6 +13,7 @@ export type GameType = {
   id: any;
   name: string;
   cover?: string;
+  thumbnail?: string;
   genres: Genre[];
   platforms: Platform[];
 };
