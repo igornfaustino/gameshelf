@@ -65,7 +65,9 @@ const Search = (props) => {
   return (
     <DashboardLayout>
       <GameFilters query={router.query.q} onSubmit={onFilterSubmit} />
-      <h1>search {router.query.q}</h1>
+
+      <br />
+
       <GamesArea loading={loadingGames} limit={limit}>
         {gamesData?.game?.map((game) => (
           <Game key={game.id} {...game} />

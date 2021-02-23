@@ -14,6 +14,7 @@ export type GameType = {
   name: string;
   cover?: string;
   thumbnail?: string;
+  status?: string;
   genres: Genre[];
   platforms: Platform[];
 };

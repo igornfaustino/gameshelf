@@ -6,6 +6,13 @@
   "not registered": "Crie uma conta gratuita",
   "go to login": "Entre com uma conta já existente",
   "user created": "Usuário criado com sucesso",
+  "to play": "Quero jogar",
+  "playing": "Jogando",
+  "completed": "Terminado",
+  "abandoned": "Abandonado",
+  "success": {
+    "game_removed": "Jogo removido com sucesso"
+  },
   "errors": {
     "duplicate_user": "Ops... Usuário já cadastrado!",
     "something_went_wrong": "Algo deu errado, tente novamente mais tarde",

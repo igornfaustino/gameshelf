@@ -16,6 +16,7 @@ export const SEARCH_GAME_QUERY = gql`
         name
         id
       }
+      status
     }
   }
 `;
@@ -41,6 +42,27 @@ export const ALL_GENRES = gql`
     genres {
       id
       name
+    }
+  }
+`;
+
+export const REMOVE_GAME_STATUS = gql`
+  mutation removeStatusToGame($gameId: ID) {
+    removeStatusToGame(gameId: $gameId) {
+      id
+      name
+      cover
+      thumbnail
+      genres {
+        id
+        name
+      }
+      platforms {
+        abbreviation
+        name
+        id
+      }
+      status
     }
   }
 `;
