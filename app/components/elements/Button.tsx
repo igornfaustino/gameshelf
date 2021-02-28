@@ -6,6 +6,7 @@ type Props = {
   textVariant: string;
   primary?: boolean;
   white?: boolean;
+  bordered?: boolean;
   theme: ThemeType;
 };
 
@@ -38,7 +39,7 @@ const Button = styled.button`
   transition: all 0.3s;
   color: ${(props) => selectTextColor(props)};
   font-weight: 600;
-  border: ${(props) => props.white && `${selectTextColor(props)} 1px solid`};
+  border: ${(props) => props.bordered && `${selectTextColor(props)} 1px solid`};
 
   &:hover {
     filter: brightness(105%);

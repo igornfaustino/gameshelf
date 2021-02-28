@@ -66,3 +66,24 @@ export const REMOVE_GAME_STATUS = gql`
     }
   }
 `;
+
+export const ADD_GAME_STATUS = gql`
+  mutation addStatusToGame($gameId: ID, $statusId: Int) {
+    addStatusToGame(gameId: $gameId, statusId: $statusId) {
+      id
+      name
+      cover
+      thumbnail
+      genres {
+        id
+        name
+      }
+      platforms {
+        abbreviation
+        name
+        id
+      }
+      status
+    }
+  }
+`;

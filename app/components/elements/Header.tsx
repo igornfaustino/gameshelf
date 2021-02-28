@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   transition: all 0.5s;
   padding: 0 50px 0 50px;
   top: 0;

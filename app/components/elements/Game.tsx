@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useTranslation } from '../../config/i18next';
 import { REMOVE_GAME_STATUS } from '../../graphql/games';
 import { GameType } from '../../types/game';
+import AddGameToListModal from './AddGameToListModal';
 import Button from './Button';
 import Card from './Card';
 import PacManSpinner from './PacManSpinner';
@@ -54,7 +55,9 @@ type Props = GameType;
 
 const Game = (props: Props) => {
   const { cover, name, thumbnail, status, id, platforms } = props;
+
   const { t } = useTranslation('common');
+  const [isVisible, setIsVisible] = useState(false);
   const [removeGameStatus, { data, loading }] = useMutation(REMOVE_GAME_STATUS, {
     onError: () => {
       toast.error(t('common:errors.something_went_wrong'));
@@ -69,30 +72,35 @@ const Game = (props: Props) => {
   }, [data, t]);
 
   return (
-    <Card>
-      <When expr={!!status}>
-        <StatusIndicator>
-          <When expr={!loading}>
-            <RemoveBtn onClick={handleRemoveBtn} />
-            {t(`common:${status}`)}
-          </When>
-          <When expr={loading}>
-            <PacManSpinner size="1.3rem" />
-          </When>
-        </StatusIndicator>
-      </When>
-      <SafeGameImage src={cover} thumb={thumbnail} />
-      <GameName>{name}</GameName>
-      <PlatformIndicator platforms={platforms} />
-      <When expr={!!status}>
-        <Button white textVariant="primary">
-          {t(`common:add`)}
-        </Button>
-      </When>
-      <When expr={!status}>
-        <Button textVariant="light">{t(`common:add`)}</Button>
-      </When>
-    </Card>
+    <>
+      <Card>
+        <When expr={!!status}>
+          <StatusIndicator>
+            <When expr={!loading}>
+              <RemoveBtn onClick={handleRemoveBtn} />
+              {t(`common:${status}`)}
+            </When>
+            <When expr={loading}>
+              <PacManSpinner size="1.3rem" />
+            </When>
+          </StatusIndicator>
+        </When>
+        <SafeGameImage src={cover} thumb={thumbnail} />
+        <GameName>{name}</GameName>
+        <PlatformIndicator platforms={platforms} />
+        <When expr={!!status}>
+          <Button white textVariant="primary" bordered onClick={() => setIsVisible(true)}>
+            {t(`common:add`)}
+          </Button>
+        </When>
+        <When expr={!status}>
+          <Button textVariant="light" onClick={() => setIsVisible(true)}>
+            {t(`common:add`)}
+          </Button>
+        </When>
+      </Card>
+      <AddGameToListModal visible={isVisible} setVisible={setIsVisible} gameId={id} name={name} />
+    </>
   );
 };
 

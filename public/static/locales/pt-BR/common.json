@@ -12,7 +12,8 @@
   "completed": "Terminado",
   "abandoned": "Abandonado",
   "success": {
-    "game_removed": "Jogo removido com sucesso"
+    "game_removed": "Jogo removido com sucesso",
+    "game_added": "Jogo adicionado com sucesso"
   },
   "errors": {
     "duplicate_user": "Ops... Usuário já cadastrado!",

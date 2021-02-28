@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { ModalProvider } from 'styled-react-modal';
 
 import { useApollo } from '../app/config/apolloClient';
 import { appWithTranslation } from '../app/config/i18next';
@@ -15,7 +16,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  color: ${(props) => props.theme.colors.fontBlack}
+  color: ${(props) => props.theme.colors.fontBlack};
+  overflow: initial !important;
 }
 
 * {
@@ -39,8 +41,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <ApolloProvider client={apolloClient}>
       <ThemeProvider theme={defaultTheme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
+        <ModalProvider>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </ModalProvider>
         <ToastContainer />
       </ThemeProvider>
     </ApolloProvider>
