@@ -20,6 +20,8 @@ const selectTextColor = (props: Props) => {
   switch (textVariant) {
     case 'light':
       return props.theme.colors.fontWhiter;
+    case 'primary':
+      return props.theme.colors.primary;
     default:
       return props.theme.colors.fontBlacker;
   }
@@ -36,6 +38,7 @@ const Button = styled.button`
   transition: all 0.3s;
   color: ${(props) => selectTextColor(props)};
   font-weight: 600;
+  border: ${(props) => props.white && `${selectTextColor(props)} 1px solid`};
 
   &:hover {
     filter: brightness(105%);

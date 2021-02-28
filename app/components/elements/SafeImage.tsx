@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Skeleton from './Skeleton';
+import When from './When';
 
 const GameImage = styled.img`
   position: absolute;
@@ -57,6 +58,9 @@ const SafeGameImage = (props: Props) => {
   const { src, thumb } = props;
   const [imageLoaded, setImageLoaded] = useState(false);
   const [thumbLoaded, setThumbLoaded] = useState(false);
+
+  if (!src) return <ImageWrapper />;
+
   return (
     <ImageWrapper>
       <GameImage
@@ -65,15 +69,17 @@ const SafeGameImage = (props: Props) => {
         }}
         src={src}
       />
-      {!imageLoaded && (
+      <When expr={!imageLoaded}>
         <Thumb
           onLoad={() => {
             setThumbLoaded(true);
           }}
           src={thumb}
         />
-      )}
-      {!thumbLoaded && !imageLoaded && <StyledSkeleton />}
+      </When>
+      <When expr={!thumbLoaded && !imageLoaded}>
+        <StyledSkeleton />
+      </When>
     </ImageWrapper>
   );
 };

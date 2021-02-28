@@ -8,7 +8,13 @@ import GameFilters, { FilterSubmitCallback } from '../app/components/elements/Ga
 import GamesArea from '../app/components/elements/GamesArea';
 import Pagination from '../app/components/elements/Pagination';
 import DashboardLayout from '../app/components/templates/DashboardLayout';
-import { SEARCH_GAME_QUERY, SEARCH_COUNT_QUERY } from '../app/graphql/games';
+import { initializeApollo } from '../app/config/apolloClient';
+import {
+  SEARCH_GAME_QUERY,
+  SEARCH_COUNT_QUERY,
+  ALL_PLATFORMS,
+  ALL_GENRES,
+} from '../app/graphql/games';
 import { GameType } from '../app/types/game';
 
 type GameQueryType = {
@@ -82,5 +88,24 @@ const Search = (props) => {
     </DashboardLayout>
   );
 };
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query({
+    query: ALL_PLATFORMS,
+  });
+
+  await apolloClient.query({
+    query: ALL_GENRES,
+  });
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+    revalidate: 60,
+  };
+}
 
 export default Search;

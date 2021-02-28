@@ -7,8 +7,10 @@ import styled from 'styled-components';
 import { useTranslation } from '../../config/i18next';
 import { REMOVE_GAME_STATUS } from '../../graphql/games';
 import { GameType } from '../../types/game';
+import Button from './Button';
 import Card from './Card';
 import PacManSpinner from './PacManSpinner';
+import PlatformIndicator from './PlatformIndicator';
 import SafeGameImage from './SafeImage';
 import When from './When';
 
@@ -38,14 +40,23 @@ const RemoveBtn = styled.span`
   }
 `;
 
+const GameName = styled.p`
+  margin: 0;
+  overflow: hidden;
+  line-height: 1rem;
+  height: 2rem;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+`;
+
 type Props = GameType;
 
 const Game = (props: Props) => {
-  const { cover, name, thumbnail, status, id } = props;
+  const { cover, name, thumbnail, status, id, platforms } = props;
   const { t } = useTranslation('common');
   const [removeGameStatus, { data, loading }] = useMutation(REMOVE_GAME_STATUS, {
-    onError: (error) => {
-      console.log({ error });
+    onError: () => {
       toast.error(t('common:errors.something_went_wrong'));
     },
   });
@@ -70,10 +81,17 @@ const Game = (props: Props) => {
           </When>
         </StatusIndicator>
       </When>
-      <When expr={!!cover}>
-        <SafeGameImage src={cover} thumb={thumbnail} />
+      <SafeGameImage src={cover} thumb={thumbnail} />
+      <GameName>{name}</GameName>
+      <PlatformIndicator platforms={platforms} />
+      <When expr={!!status}>
+        <Button white textVariant="primary">
+          {t(`common:add`)}
+        </Button>
       </When>
-      {name}
+      <When expr={!status}>
+        <Button textVariant="light">{t(`common:add`)}</Button>
+      </When>
     </Card>
   );
 };
