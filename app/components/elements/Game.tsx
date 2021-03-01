@@ -43,6 +43,7 @@ const RemoveBtn = styled.span`
 
 const GameName = styled.p`
   margin: 0;
+  margin-top: 4px;
   overflow: hidden;
   line-height: 1rem;
   height: 2rem;
@@ -99,7 +100,13 @@ const Game = (props: Props) => {
           </Button>
         </When>
       </Card>
-      <AddGameToListModal visible={isVisible} setVisible={setIsVisible} gameId={id} name={name} />
+      <AddGameToListModal
+        visible={isVisible}
+        setVisible={setIsVisible}
+        gameId={id}
+        name={name}
+        status={status}
+      />
     </>
   );
 };

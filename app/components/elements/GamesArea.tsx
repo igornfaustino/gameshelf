@@ -5,7 +5,7 @@ import Skeleton from './Skeleton';
 const GamesAreaWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 262px));
-  grid-gap: 16px;
+  grid-gap: 32px;
   justify-items: center;
   justify-content: center;
   height: 100%;

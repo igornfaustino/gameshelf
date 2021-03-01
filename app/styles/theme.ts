@@ -14,6 +14,7 @@ export type ThemeType = {
     error: string;
     contentArea: string;
     cardColor: string;
+    disabled: string;
   };
   constants: {
     headerHeight: string;
@@ -38,6 +39,7 @@ export const defaultTheme: ThemeType = {
     error: 'red',
     contentArea: '#fff',
     cardColor: '#fff',
+    disabled: '#777',
   },
   constants: {
     headerHeight: '64px',
