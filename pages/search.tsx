@@ -42,6 +42,7 @@ const Search = (props) => {
         platforms: platformIds,
         genres: genreIds,
       },
+      skip: !router.query.q,
     }
   );
   const { data: countData } = useQuery<CountQueryType>(SEARCH_COUNT_QUERY, {
@@ -50,6 +51,7 @@ const Search = (props) => {
       platforms: platformIds,
       genres: genreIds,
     },
+    skip: !router.query.q,
   });
 
   const onPageChange = (page: number) => {

@@ -1,22 +1,47 @@
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client';
+
+import useAuthToken from '../hooks/useAuthToken';
 
 const URL = 'http://localhost:8000/graphql';
 
-let apolloClient;
+let apolloClient: ApolloClient<NormalizedCacheObject>;
+
+const httpLink = new HttpLink({ uri: URL });
+
+const authMiddleware = (authToken) =>
+  new ApolloLink((operation, forward) => {
+    // add the authorization to the headers
+    if (authToken) {
+      operation.setContext({
+        headers: {
+          authorization: `Bearer ${authToken}`,
+        },
+      });
+    }
+
+    return forward(operation);
+  });
+
+const createLink = (token) => authMiddleware(token).concat(httpLink);
 
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined', // set to true for SSR
-    link: new HttpLink({
-      uri: URL,
-    }),
     cache: new InMemoryCache(),
   });
 }
 
-export function initializeApollo(initialState = null) {
+export function initializeApollo(initialState = null, authToken = null) {
   const _apolloClient = apolloClient ?? createApolloClient();
+  _apolloClient.setLink(createLink(authToken));
 
   // If your page has Next.js data fetching methods that use Apollo Client,
   // the initial state gets hydrated here
@@ -38,6 +63,7 @@ export function initializeApollo(initialState = null) {
 }
 
 export function useApollo(initialState) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState]);
+  const { authToken } = useAuthToken();
+  const store = useMemo(() => initializeApollo(initialState, authToken), [initialState, authToken]);
   return store;
 }
