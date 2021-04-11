@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import Modal from 'styled-react-modal';
@@ -77,6 +78,7 @@ const AddGameToListModal = (props: Props) => {
   const { visible, setVisible, gameId, name, status } = props;
 
   const { t } = useTranslation('common');
+  const { push } = useRouter();
 
   const [addGameStatus, { data, loading }] = useMutation(ADD_GAME_STATUS, {
     onError: () => {
@@ -100,9 +102,15 @@ const AddGameToListModal = (props: Props) => {
 
   useEffect(() => {
     if (!data || !data.addStatusToGame) return;
-    toast.success(t('common:success.game_added'));
     setVisible(false);
-  }, [data, setVisible, t]);
+    if (data.addStatusToGame.__typename === 'Unauthorized') {
+      localStorage.clear();
+      toast.error(t(`common:errors.${data.addStatusToGame.reason}`));
+      push('/login');
+      return;
+    }
+    toast.success(t('common:success.game_added'));
+  }, [data, push, setVisible, t]);
 
   return (
     <StyledModal isOpen={visible} onBackgroundClick={handleClose} onEscapeKeydown={handleClose}>

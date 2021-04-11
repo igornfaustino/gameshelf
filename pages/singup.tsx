@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,6 +15,7 @@ import Text from '../app/components/elements/Text';
 import SmallContentLayout from '../app/components/templates/SmallContentLayout';
 import { useTranslation } from '../app/config/i18next';
 import { CREATE_USER } from '../app/graphql/user';
+import useAuthToken from '../app/modules/auth/useAuthToken';
 
 const schema = yup.object().shape({
   name: yup.string().required('required'),
@@ -24,6 +25,8 @@ const schema = yup.object().shape({
 
 const Singup = () => {
   const router = useRouter();
+  const client = useApolloClient();
+  const { saveToken } = useAuthToken();
   const { t } = useTranslation(['pagetitles', 'common', 'forms', 'button']);
   const [createUser, { data }] = useMutation(CREATE_USER, {
     onError: () => {
@@ -42,11 +45,13 @@ const Singup = () => {
 
   const authUser = useCallback(
     (token) => {
-      window.localStorage.setItem('auth', token);
+      saveToken(token);
       toast.success(t('common:user created'));
-      router.push('/');
+      client.cache.reset().then(() => {
+        router.push('/');
+      });
     },
-    [router, t]
+    [client.cache, router, saveToken, t]
   );
 
   useEffect(() => {

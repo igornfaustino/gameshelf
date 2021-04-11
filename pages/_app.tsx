@@ -1,10 +1,10 @@
-import { ApolloProvider } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { ModalProvider } from 'styled-react-modal';
 
-import { useApollo } from '../app/config/apolloClient';
 import { appWithTranslation } from '../app/config/i18next';
+import { AuthProvider } from '../app/modules/auth/authProvider';
+import ApolloWrapper from '../app/modules/shared/helpers/ApolloWrapper';
 import defaultTheme from '../app/styles/theme';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,18 +36,18 @@ body {
 `;
 
 function MyApp({ Component, pageProps }) {
-  const apolloClient = useApollo(pageProps.initialApolloState);
-
   return (
-    <ApolloProvider client={apolloClient}>
-      <ThemeProvider theme={defaultTheme}>
-        <ModalProvider>
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </ModalProvider>
-        <ToastContainer />
-      </ThemeProvider>
-    </ApolloProvider>
+    <AuthProvider>
+      <ApolloWrapper initialApolloState={pageProps.initialApolloState}>
+        <ThemeProvider theme={defaultTheme}>
+          <ModalProvider>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </ModalProvider>
+          <ToastContainer />
+        </ThemeProvider>
+      </ApolloWrapper>
+    </AuthProvider>
   );
 }
 

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
+import { useApolloClient } from '@apollo/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import { useTranslation } from '../../config/i18next';
 import { contextMenu, OFFLINE_ROUTE_KEY, ONLINE_ROUTE_KEY } from '../../config/routes';
+import useAuthToken from '../../modules/auth/useAuthToken';
+import useLogout from '../../modules/auth/useLogout';
 import Clickable from './Clickable';
 import Search from './Search';
 
@@ -29,18 +32,20 @@ const ContextMenu = () => {
   const router = useRouter();
   const [context, setContext] = useState('');
   const { t } = useTranslation('menu');
+  const { authToken } = useAuthToken();
+  const logout = useLogout();
 
   const onLogout = () => {
-    window.localStorage.clear();
     setContext(OFFLINE_ROUTE_KEY);
-    router.push('/');
+    logout().then(() => {
+      router.push('/');
+    });
   };
 
   useEffect(() => {
-    const token = window.localStorage.getItem('auth');
-    if (!token) return setContext(OFFLINE_ROUTE_KEY);
+    if (!authToken) return setContext(OFFLINE_ROUTE_KEY);
     return setContext(ONLINE_ROUTE_KEY);
-  }, []);
+  }, [authToken]);
 
   if (!context) return <></>;
 
