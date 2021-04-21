@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import { AuthContext } from './authProvider';
+import { AuthContext } from '../contexts/authProvider';
 
 const useAuthToken = () => {
   const { values, setValues } = useContext(AuthContext);
@@ -18,7 +18,7 @@ const useAuthToken = () => {
   useEffect(() => {
     if (!setValues) return;
     const authToken = localStorage.getItem('auth');
-    setValues({ ...values, authToken });
+    setValues((oldValues) => ({ ...oldValues, authToken }));
   }, [setValues]);
 
   return { authToken: values?.authToken, saveToken, clearToken };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Skeleton from './Skeleton';
+import Skeleton from '../../shared/elements/Skeleton';
 
 const GamesAreaWrapper = styled.div`
   display: grid;

@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
-import { useTranslation } from '../../config/i18next';
-import { contextMenu, OFFLINE_ROUTE_KEY, ONLINE_ROUTE_KEY } from '../../config/routes';
-import useAuthToken from '../../modules/auth/useAuthToken';
-import useLogout from '../../modules/auth/useLogout';
+import useAuthToken from '../../auth/hooks/useAuthToken';
+import useLogout from '../../auth/hooks/useLogout';
+import { useTranslation } from '../config/i18next';
+import { contextMenu, OFFLINE_ROUTE_KEY, ONLINE_ROUTE_KEY } from '../config/routes';
 import Clickable from './Clickable';
 import Search from './Search';
 

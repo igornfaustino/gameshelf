@@ -8,7 +8,7 @@ import {
   NormalizedCacheObject,
 } from '@apollo/client';
 
-import useAuthToken from '../modules/auth/useAuthToken';
+import useAuthToken from '../../auth/hooks/useAuthToken';
 
 const URL = 'http://localhost:8000/graphql';
 

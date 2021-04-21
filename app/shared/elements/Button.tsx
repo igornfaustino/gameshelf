@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ThemeType } from '../../styles/theme';
+import { ThemeType } from '../styles/theme';
 
 type Props = {
   textVariant: string;

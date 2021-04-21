@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ApolloProvider } from '@apollo/client';
 
-import { useApollo } from '../../../config/apolloClient';
+import { useApollo } from '../config/apolloClient';
 
 type Props = {
   initialApolloState: unknown;

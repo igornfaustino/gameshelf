@@ -2,10 +2,10 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { ModalProvider } from 'styled-react-modal';
 
-import { appWithTranslation } from '../app/config/i18next';
-import { AuthProvider } from '../app/modules/auth/authProvider';
-import ApolloWrapper from '../app/modules/shared/helpers/ApolloWrapper';
-import defaultTheme from '../app/styles/theme';
+import { AuthProvider } from '../app/auth/contexts/authProvider';
+import { appWithTranslation } from '../app/shared/config/i18next';
+import ApolloWrapper from '../app/shared/helpers/ApolloWrapper';
+import defaultTheme from '../app/shared/styles/theme';
 
 import 'react-toastify/dist/ReactToastify.css';
 

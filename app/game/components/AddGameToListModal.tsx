@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
 
-import { useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import Modal from 'styled-react-modal';
 
-import { useTranslation } from '../../config/i18next';
-import { ADD_GAME_STATUS } from '../../graphql/games';
+import { useTranslation } from '../../shared/config/i18next';
+import PacManSpinner from '../../shared/elements/PacManSpinner';
+import When from '../../shared/elements/When';
+import useAddGameStatus from '../hooks/useAddGameStatus';
 import Bookshelf from '../icons/Bookshelf';
 import GameController from '../icons/GameController';
 import Trophy from '../icons/Trophy';
 import Web from '../icons/Web';
-import PacManSpinner from './PacManSpinner';
-import When from './When';
 
 const StyledModal = Modal.styled`
   padding: 16px;
@@ -76,60 +73,38 @@ type Props = {
 
 const AddGameToListModal = (props: Props) => {
   const { visible, setVisible, gameId, name, status } = props;
-
   const { t } = useTranslation('common');
-  const { push } = useRouter();
 
-  const [addGameStatus, { data, loading }] = useMutation(ADD_GAME_STATUS, {
-    onError: () => {
-      toast.error(t('common:errors.something_went_wrong'));
-    },
-  });
+  const { handleAddGameStatus, data, loading } = useAddGameStatus(gameId);
 
   const handleClose = () => {
     if (loading) return;
     setVisible(false);
   };
 
-  const handleAddGame = (statusId) => () => {
-    addGameStatus({
-      variables: {
-        gameId,
-        statusId,
-      },
-    });
-  };
-
   useEffect(() => {
     if (!data || !data.addStatusToGame) return;
     setVisible(false);
-    if (data.addStatusToGame.__typename === 'Unauthorized') {
-      localStorage.clear();
-      toast.error(t(`common:errors.${data.addStatusToGame.reason}`));
-      push('/login');
-      return;
-    }
-    toast.success(t('common:success.game_added'));
-  }, [data, push, setVisible, t]);
+  }, [data, setVisible]);
 
   return (
     <StyledModal isOpen={visible} onBackgroundClick={handleClose} onEscapeKeydown={handleClose}>
       <ModalTitle>{name}</ModalTitle>
       <ModalBody>
         <When expr={!loading}>
-          <StatusButton onClick={handleAddGame(1)} disabled={status === 'to play'}>
+          <StatusButton onClick={handleAddGameStatus(1)} disabled={status === 'to play'}>
             <Bookshelf size="90px" />
             <p>{t('common:to play')}</p>
           </StatusButton>
-          <StatusButton onClick={handleAddGame(2)} disabled={status === 'playing'}>
+          <StatusButton onClick={handleAddGameStatus(2)} disabled={status === 'playing'}>
             <GameController size="90px" />
             <p>{t('common:playing')}</p>
           </StatusButton>
-          <StatusButton onClick={handleAddGame(3)} disabled={status === 'completed'}>
+          <StatusButton onClick={handleAddGameStatus(3)} disabled={status === 'completed'}>
             <Trophy size="90px" />
             <p>{t('common:completed')}</p>
           </StatusButton>
-          <StatusButton onClick={handleAddGame(4)} disabled={status === 'abandoned'}>
+          <StatusButton onClick={handleAddGameStatus(4)} disabled={status === 'abandoned'}>
             <Web size="90px" />
             <p>{t('common:abandoned')}</p>
           </StatusButton>

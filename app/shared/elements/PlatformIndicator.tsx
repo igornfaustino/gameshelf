@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { Platform } from '../../types/game';
+import { Platform } from '../../game/types/game';
 
 const PlatformIndicatorContainer = styled.span`
   overflow: hidden;

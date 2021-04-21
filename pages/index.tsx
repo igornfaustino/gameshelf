@@ -1,6 +1,6 @@
-import Search from '../app/components/elements/Search';
-import BaseLayout from '../app/components/templates/BaseLayout';
-import { useTranslation } from '../app/config/i18next';
+import { useTranslation } from '../app/shared/config/i18next';
+import Search from '../app/shared/elements/Search';
+import BaseLayout from '../app/shared/templates/BaseLayout';
 
 export default function Home() {
   const { t } = useTranslation();

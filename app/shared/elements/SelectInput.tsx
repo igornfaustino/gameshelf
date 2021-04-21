@@ -2,7 +2,7 @@ import React from 'react';
 
 import Select, { OptionsType } from 'react-select';
 
-import defaultTheme from '../../styles/theme';
+import defaultTheme from '../styles/theme';
 
 type Props = {
   options: { value: string; label: string }[];

@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import SearchIcon from '../../assets/icons/search.svg';
-import { useTranslation } from '../../config/i18next';
+import { useTranslation } from '../config/i18next';
+import SearchIcon from '../icons/search';
 import { StyledInput } from './BasicInput';
 
 const SearchInput = styled(StyledInput)`

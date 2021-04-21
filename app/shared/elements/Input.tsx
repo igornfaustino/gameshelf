@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTranslation } from '../../config/i18next';
+import { useTranslation } from '../config/i18next';
 import BasicInput from './BasicInput';
 
 type Props = React.DetailedHTMLProps<

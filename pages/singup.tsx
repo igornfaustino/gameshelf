@@ -8,14 +8,14 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
-import Button from '../app/components/elements/Button';
-import Input from '../app/components/elements/Input';
-import StyledLink from '../app/components/elements/Link';
-import Text from '../app/components/elements/Text';
-import SmallContentLayout from '../app/components/templates/SmallContentLayout';
-import { useTranslation } from '../app/config/i18next';
-import { CREATE_USER } from '../app/graphql/user';
-import useAuthToken from '../app/modules/auth/useAuthToken';
+import { CREATE_USER } from '../app/auth/graphql/user';
+import useAuthToken from '../app/auth/hooks/useAuthToken';
+import { useTranslation } from '../app/shared/config/i18next';
+import Button from '../app/shared/elements/Button';
+import Input from '../app/shared/elements/Input';
+import StyledLink from '../app/shared/elements/Link';
+import Text from '../app/shared/elements/Text';
+import SmallContentLayout from '../app/shared/templates/SmallContentLayout';
 
 const schema = yup.object().shape({
   name: yup.string().required('required'),

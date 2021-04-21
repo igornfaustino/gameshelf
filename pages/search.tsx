@@ -3,19 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
-import Game from '../app/components/elements/Game';
-import GameFilters, { FilterSubmitCallback } from '../app/components/elements/GameFilters';
-import GamesArea from '../app/components/elements/GamesArea';
-import Pagination from '../app/components/elements/Pagination';
-import DashboardLayout from '../app/components/templates/DashboardLayout';
-import { initializeApollo } from '../app/config/apolloClient';
+import Game from '../app/game/components/Game';
+import GameFilters, { FilterSubmitCallback } from '../app/game/components/GameFilters';
+import GamesArea from '../app/game/components/GamesArea';
 import {
   SEARCH_GAME_QUERY,
   SEARCH_COUNT_QUERY,
   ALL_PLATFORMS,
   ALL_GENRES,
-} from '../app/graphql/games';
-import { GameType } from '../app/types/game';
+} from '../app/game/graphql/games';
+import { GameType } from '../app/game/types/game';
+import { initializeApollo } from '../app/shared/config/apolloClient';
+import Pagination from '../app/shared/elements/Pagination';
+import DashboardLayout from '../app/shared/templates/DashboardLayout';
 
 type GameQueryType = {
   game: GameType[];

@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { useTranslation } from '../../config/i18next';
-import { REMOVE_GAME_STATUS } from '../../graphql/games';
-import useLogout from '../../modules/auth/useLogout';
-import { GameType } from '../../types/game';
+import { useTranslation } from '../../shared/config/i18next';
+import Button from '../../shared/elements/Button';
+import Card from '../../shared/elements/Card';
+import PacManSpinner from '../../shared/elements/PacManSpinner';
+import PlatformIndicator from '../../shared/elements/PlatformIndicator';
+import SafeGameImage from '../../shared/elements/SafeImage';
+import When from '../../shared/elements/When';
+import useRemoveGameStatus from '../hooks/useRemoveGameStatus';
+import { GameType } from '../types/game';
 import AddGameToListModal from './AddGameToListModal';
-import Button from './Button';
-import Card from './Card';
-import PacManSpinner from './PacManSpinner';
-import PlatformIndicator from './PlatformIndicator';
-import SafeGameImage from './SafeImage';
-import When from './When';
 
 const StatusIndicator = styled.div`
   position: absolute;
@@ -58,30 +54,11 @@ type Props = GameType;
 
 const Game = (props: Props) => {
   const { cover, name, thumbnail, status, id, platforms } = props;
-  const { push } = useRouter();
-  const logout = useLogout();
+
+  const { handleRemoveGameStatus, loading } = useRemoveGameStatus(id);
 
   const { t } = useTranslation('common');
   const [isVisible, setIsVisible] = useState(false);
-  const [removeGameStatus, { data, loading }] = useMutation(REMOVE_GAME_STATUS, {
-    onError: () => {
-      toast.error(t('common:errors.something_went_wrong'));
-    },
-  });
-
-  const handleRemoveBtn = () => removeGameStatus({ variables: { gameId: id } });
-
-  useEffect(() => {
-    if (!data || !data.removeStatusToGame) return;
-    if (data.removeStatusToGame.__typename === 'Unauthorized') {
-      logout().then(() => {
-        toast.error(t(`common:errors.${data.removeStatusToGame.reason}`));
-        push('/login');
-      });
-      return;
-    }
-    toast.success(t('common:success.game_removed'));
-  }, [data, logout, push, t]);
 
   return (
     <>
@@ -89,7 +66,7 @@ const Game = (props: Props) => {
         <When expr={!!status}>
           <StatusIndicator>
             <When expr={!loading}>
-              <RemoveBtn onClick={handleRemoveBtn} />
+              <RemoveBtn onClick={handleRemoveGameStatus} />
               {t(`common:${status}`)}
             </When>
             <When expr={loading}>
