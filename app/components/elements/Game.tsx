@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useTranslation } from '../../config/i18next';
 import { REMOVE_GAME_STATUS } from '../../graphql/games';
+import useLogout from '../../modules/auth/useLogout';
 import { GameType } from '../../types/game';
 import AddGameToListModal from './AddGameToListModal';
 import Button from './Button';
@@ -56,6 +58,8 @@ type Props = GameType;
 
 const Game = (props: Props) => {
   const { cover, name, thumbnail, status, id, platforms } = props;
+  const { push } = useRouter();
+  const logout = useLogout();
 
   const { t } = useTranslation('common');
   const [isVisible, setIsVisible] = useState(false);
@@ -69,8 +73,15 @@ const Game = (props: Props) => {
 
   useEffect(() => {
     if (!data || !data.removeStatusToGame) return;
+    if (data.removeStatusToGame.__typename === 'Unauthorized') {
+      logout().then(() => {
+        toast.error(t(`common:errors.${data.removeStatusToGame.reason}`));
+        push('/login');
+      });
+      return;
+    }
     toast.success(t('common:success.game_removed'));
-  }, [data, t]);
+  }, [data, logout, push, t]);
 
   return (
     <>

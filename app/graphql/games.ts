@@ -49,20 +49,25 @@ export const ALL_GENRES = gql`
 export const REMOVE_GAME_STATUS = gql`
   mutation removeStatusToGame($gameId: ID) {
     removeStatusToGame(gameId: $gameId) {
-      id
-      name
-      cover
-      thumbnail
-      genres {
+      ... on Game {
         id
         name
+        cover
+        thumbnail
+        genres {
+          id
+          name
+        }
+        platforms {
+          abbreviation
+          name
+          id
+        }
+        status
       }
-      platforms {
-        abbreviation
-        name
-        id
+      ... on Unauthorized {
+        reason
       }
-      status
     }
   }
 `;
