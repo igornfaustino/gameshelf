@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 
-import { useQuery } from '@apollo/client';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -9,8 +8,8 @@ import Button from '../../shared/elements/Button';
 import SelectInput from '../../shared/elements/SelectInput';
 import Skeleton from '../../shared/elements/Skeleton';
 import defaultTheme from '../../shared/styles/theme';
-import { ALL_GENRES, ALL_PLATFORMS } from '../graphql/games';
-import { Genre, Platform } from '../types/game';
+import useGenres from '../hooks/useGenres';
+import usePlatforms from '../hooks/usePlatforms';
 
 const FilterGroup = styled.form`
   display: flex;
@@ -42,29 +41,21 @@ type Props = {
   query: string | string[];
 };
 
-type PlatformQueryType = {
-  platforms: Platform[];
-};
-
-type GenreQueryType = {
-  genres: Genre[];
-};
-
 const GameFilters = (props: Props) => {
   const { onSubmit, query } = props;
   const { t } = useTranslation(['button', 'forms']);
-  const { data: platforms, loading: platformLoading } = useQuery<PlatformQueryType>(ALL_PLATFORMS);
-  const { data: genres, loading: genreLoading } = useQuery<GenreQueryType>(ALL_GENRES);
+  const { platforms, loading: platformLoading } = usePlatforms();
+  const { genres, loading: genreLoading } = useGenres();
   const { control, handleSubmit, reset } = useForm();
 
   const loading = platformLoading || genreLoading;
 
-  const platformOptions = platforms?.platforms.map((platform) => ({
+  const platformOptions = platforms.map((platform) => ({
     value: platform.id,
     label: platform.name,
   }));
 
-  const genreOptions = genres?.genres.map((genre) => ({
+  const genreOptions = genres.map((genre) => ({
     value: genre.id,
     label: genre.name,
   }));

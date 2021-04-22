@@ -1,5 +1,4 @@
 import { useTranslation } from '../app/shared/config/i18next';
-import Search from '../app/shared/elements/Search';
 import BaseLayout from '../app/shared/templates/BaseLayout';
 
 export default function Home() {

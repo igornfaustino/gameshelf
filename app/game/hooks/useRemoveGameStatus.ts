@@ -30,9 +30,10 @@ const useRemoveGameStatus = (gameId) => {
       return;
     }
     toast.success(t('common:success.game_removed'));
-  }, [data, logout, push, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
-  return { handleRemoveGameStatus, data, loading };
+  return { handleRemoveGameStatus, result: data?.removeStatusToGame, loading };
 };
 
 export default useRemoveGameStatus;

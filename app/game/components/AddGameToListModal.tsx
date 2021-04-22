@@ -75,7 +75,7 @@ const AddGameToListModal = (props: Props) => {
   const { visible, setVisible, gameId, name, status } = props;
   const { t } = useTranslation('common');
 
-  const { handleAddGameStatus, data, loading } = useAddGameStatus(gameId);
+  const { handleAddGameStatus, result, loading } = useAddGameStatus(gameId);
 
   const handleClose = () => {
     if (loading) return;
@@ -83,9 +83,9 @@ const AddGameToListModal = (props: Props) => {
   };
 
   useEffect(() => {
-    if (!data || !data.addStatusToGame) return;
+    if (!result) return;
     setVisible(false);
-  }, [data, setVisible]);
+  }, [result, setVisible]);
 
   return (
     <StyledModal isOpen={visible} onBackgroundClick={handleClose} onEscapeKeydown={handleClose}>

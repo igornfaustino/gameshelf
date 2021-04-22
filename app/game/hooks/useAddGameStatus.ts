@@ -40,7 +40,7 @@ const useAddGameStatus = (gameId) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  return { handleAddGameStatus, data, loading };
+  return { handleAddGameStatus, result: data?.addStatusToGame, loading };
 };
 
 export default useAddGameStatus;

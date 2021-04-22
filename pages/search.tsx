@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import Game from '../app/game/components/Game';
 import GameFilters, { FilterSubmitCallback } from '../app/game/components/GameFilters';
 import GamesArea from '../app/game/components/GamesArea';
-import {
-  SEARCH_GAME_QUERY,
-  SEARCH_COUNT_QUERY,
-  ALL_PLATFORMS,
-  ALL_GENRES,
-} from '../app/game/graphql/games';
-import { GameType } from '../app/game/types/game';
+import { ALL_PLATFORMS, ALL_GENRES } from '../app/game/graphql/games';
+import useGameQuery from '../app/game/hooks/useGameQuery';
 import { initializeApollo } from '../app/shared/config/apolloClient';
 import Pagination from '../app/shared/elements/Pagination';
 import DashboardLayout from '../app/shared/templates/DashboardLayout';
-
-type GameQueryType = {
-  game: GameType[];
-};
-
-type CountQueryType = {
-  countGames: number;
-};
 
 const Search = (props) => {
   const router = useRouter();
@@ -32,27 +18,13 @@ const Search = (props) => {
   const [platformIds, setPlatformIds] = useState<number[] | undefined>(undefined);
   const [genreIds, setGenreIds] = useState<number[] | undefined>(undefined);
 
-  const { loading: loadingGames, error: gamesError, data: gamesData } = useQuery<GameQueryType>(
-    SEARCH_GAME_QUERY,
-    {
-      variables: {
-        search: router.query.q,
-        limit,
-        offset,
-        platforms: platformIds,
-        genres: genreIds,
-      },
-      skip: !router.query.q,
-    }
+  const { loading: loadingGames, games, count } = useGameQuery(
+    router.query.q as string,
+    limit,
+    offset,
+    platformIds,
+    genreIds
   );
-  const { data: countData } = useQuery<CountQueryType>(SEARCH_COUNT_QUERY, {
-    variables: {
-      search: router.query.q,
-      platforms: platformIds,
-      genres: genreIds,
-    },
-    skip: !router.query.q,
-  });
 
   const onPageChange = (page: number) => {
     setOffset(limit * page);
@@ -77,16 +49,11 @@ const Search = (props) => {
       <br />
 
       <GamesArea loading={loadingGames} limit={limit}>
-        {gamesData?.game?.map((game) => (
+        {games?.map((game) => (
           <Game key={game.id} {...game} />
         ))}
       </GamesArea>
-      <Pagination
-        total={countData?.countGames}
-        offset={offset}
-        limit={limit}
-        onPageChange={onPageChange}
-      />
+      <Pagination total={count} offset={offset} limit={limit} onPageChange={onPageChange} />
     </DashboardLayout>
   );
 };

@@ -1,15 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 
-import { useApolloClient, useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
-import { CREATE_USER } from '../app/auth/graphql/user';
-import useAuthToken from '../app/auth/hooks/useAuthToken';
+import useCreateAndAuthUser from '../app/auth/hooks/useCreateUser';
 import { useTranslation } from '../app/shared/config/i18next';
 import Button from '../app/shared/elements/Button';
 import Input from '../app/shared/elements/Input';
@@ -24,15 +20,8 @@ const schema = yup.object().shape({
 });
 
 const Singup = () => {
-  const router = useRouter();
-  const client = useApolloClient();
-  const { saveToken } = useAuthToken();
   const { t } = useTranslation(['pagetitles', 'common', 'forms', 'button']);
-  const [createUser, { data }] = useMutation(CREATE_USER, {
-    onError: () => {
-      toast.error(t('common:errors.something_went_wrong'));
-    },
-  });
+  const createAndAuthUser = useCreateAndAuthUser();
   const { register, errors, handleSubmit, reset } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -40,30 +29,8 @@ const Singup = () => {
 
   const handleFormSubmit = (values) => {
     reset(values);
-    createUser({ variables: { ...values } });
+    createAndAuthUser(values);
   };
-
-  const authUser = useCallback(
-    (token) => {
-      saveToken(token);
-      toast.success(t('common:user created'));
-      client.cache.reset().then(() => {
-        router.push('/');
-      });
-    },
-    [client.cache, router, saveToken, t]
-  );
-
-  useEffect(() => {
-    if (!data || !data.createUser) return;
-    if (data.createUser.__typename === 'Authorized') {
-      authUser(data.createUser.token);
-      return;
-    }
-    if (data.createUser.__typename === 'Unauthorized') {
-      toast.error(t(`common:errors.${data.createUser.reason}`));
-    }
-  }, [authUser, data, t]);
 
   return (
     <SmallContentLayout title={t('pagetitles:register')} pageName={t('common:register')}>
