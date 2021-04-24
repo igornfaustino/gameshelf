@@ -9,12 +9,13 @@ import { ALL_PLATFORMS, ALL_GENRES } from '../app/game/graphql/games';
 import useGameQuery from '../app/game/hooks/useGameQuery';
 import { initializeApollo } from '../app/shared/config/apolloClient';
 import Pagination from '../app/shared/elements/Pagination';
+import usePagination from '../app/shared/hooks/usePagination';
 import DashboardLayout from '../app/shared/templates/DashboardLayout';
 
 const Search = (props) => {
   const router = useRouter();
-  const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(30);
+  const { limit, offset, onPageChange, resetOffset } = usePagination();
+
   const [platformIds, setPlatformIds] = useState<number[] | undefined>(undefined);
   const [genreIds, setGenreIds] = useState<number[] | undefined>(undefined);
 
@@ -26,21 +27,16 @@ const Search = (props) => {
     genreIds
   );
 
-  const onPageChange = (page: number) => {
-    setOffset(limit * page);
-    window.scrollTo(0, 0);
-  };
-
   const onFilterSubmit = (values: FilterSubmitCallback) => {
     setPlatformIds(values.platforms);
     setGenreIds(values.genres);
   };
 
   useEffect(() => {
-    setOffset(0);
+    resetOffset();
     setGenreIds(undefined);
     setPlatformIds(undefined);
-  }, [router.query.q]);
+  }, [resetOffset, router.query.q]);
 
   return (
     <DashboardLayout>
