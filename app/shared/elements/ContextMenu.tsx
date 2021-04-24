@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { useApolloClient } from '@apollo/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
