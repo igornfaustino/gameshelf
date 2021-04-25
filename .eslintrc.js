@@ -49,6 +49,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/require-default-props': 'off',
     'no-underscore-dangle': 'off',
+    'consistent-return': 'off',
     'import/order': [
       'error',
       {
