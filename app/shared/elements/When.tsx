@@ -1,15 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-type Props = {
-  expr: boolean | (() => boolean);
-  children: React.ReactChild | React.ReactChildren | React.ReactNode;
-};
-
-export default function When(props: Props) {
+export default function When(props) {
   const { expr, children } = props;
 
-  if (typeof expr === 'boolean' && !expr) return <></>;
-  if (typeof expr === 'function' && !expr()) return <></>;
-
-  return <>{children}</>;
+  if (expr) return typeof children === 'function' ? children() : children;
+  return <></>;
 }
