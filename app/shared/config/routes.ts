@@ -18,7 +18,12 @@ export const offlineRoutes: Route[] = [
   },
 ];
 
-export const onlineRoutes: Route[] = [];
+export const onlineRoutes: Route[] = [
+  {
+    nameKey: 'my games',
+    href: '/status/toPlay',
+  },
+];
 
 export const contextMenu: ContextMenu = {
   offlineRoutes,

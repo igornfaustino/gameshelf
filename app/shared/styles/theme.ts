@@ -1,29 +1,4 @@
-export type ThemeType = {
-  colors: {
-    link: string;
-    header: string;
-    primary: string;
-    primaryLight: string;
-    primaryDark: string;
-    background: string;
-    fontWhite: string;
-    fontWhiter: string;
-    fontBlack: string;
-    fontBlacker: string;
-    inputShadow: string;
-    error: string;
-    contentArea: string;
-    cardColor: string;
-    disabled: string;
-  };
-  constants: {
-    headerHeight: string;
-    footerHeight: string;
-    inputHeight: string;
-  };
-};
-
-export const defaultTheme: ThemeType = {
+export const defaultTheme = {
   colors: {
     link: '#43a047',
     header: '#444',
@@ -40,12 +15,15 @@ export const defaultTheme: ThemeType = {
     contentArea: '#fff',
     cardColor: '#fff',
     disabled: '#777',
+    separator: '#e6e8f1',
   },
   constants: {
     headerHeight: '64px',
     footerHeight: '83px',
     inputHeight: '37px',
   },
-};
+} as const;
+
+export type ThemeType = typeof defaultTheme;
 
 export default defaultTheme;

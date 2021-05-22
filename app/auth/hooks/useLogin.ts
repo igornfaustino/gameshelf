@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect } from 'react';
 
 import { useApolloClient, useMutation } from '@apollo/client';
@@ -40,7 +41,7 @@ const useLogin = () => {
     if (data.login.__typename === 'Unauthorized') {
       toast.error(t(`common:errors.${data.login.reason}`));
     }
-  }, [authUser, data, t]);
+  }, [data]);
 
   return { login: handleLogin, data };
 };

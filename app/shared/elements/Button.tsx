@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { ThemeType } from '../styles/theme';
 
 type Props = {
-  textVariant: string;
+  textVariant?: string;
   primary?: boolean;
   white?: boolean;
   bordered?: boolean;
   theme: ThemeType;
+  block?: boolean;
 };
 
 const selectBgColor = (props: Props) => {
@@ -28,7 +29,7 @@ const selectTextColor = (props: Props) => {
   }
 };
 
-const Button = styled.button`
+const Button = styled.button<Props>`
   border: none;
   padding: 8px;
   cursor: pointer;

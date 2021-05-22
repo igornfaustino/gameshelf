@@ -8,7 +8,6 @@ const GamesAreaWrapper = styled.div`
   grid-gap: 32px;
   justify-items: center;
   justify-content: center;
-  height: 100%;
 
   @media (max-width: 1600px) {
     grid-template-columns: repeat(auto-fit, minmax(200px, 230px));

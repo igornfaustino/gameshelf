@@ -1,27 +1,17 @@
-import { useContext, useEffect } from 'react';
-
-import { AuthContext } from '../contexts/authProvider';
+import { useCookies } from 'react-cookie';
 
 const useAuthToken = () => {
-  const { values, setValues } = useContext(AuthContext);
+  const [cookies, setCookie, removeCookie] = useCookies(['auth']);
 
   const saveToken = (token) => {
-    setValues({ ...values, authToken: token });
-    localStorage.setItem('auth', token);
+    setCookie('auth', token);
   };
 
   const clearToken = () => {
-    setValues({ ...values, authToken: undefined });
-    localStorage.clear();
+    removeCookie('auth');
   };
 
-  useEffect(() => {
-    if (!setValues) return;
-    const authToken = localStorage.getItem('auth');
-    setValues((oldValues) => ({ ...oldValues, authToken }));
-  }, [setValues]);
-
-  return { authToken: values?.authToken, saveToken, clearToken };
+  return { authToken: cookies.auth, saveToken, clearToken };
 };
 
 export default useAuthToken;

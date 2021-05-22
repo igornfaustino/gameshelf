@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const Skeleton = styled.div`
+type Props = {
+  height?: string;
+  width?: string;
+  paddingTop?: string;
+};
+
+const Skeleton = styled.div<Props>`
   height: ${(props) => props.height || '100%'};
   width: ${(props) => props.width || '100%'};
   padding-top: ${(props) => props.paddingTop};

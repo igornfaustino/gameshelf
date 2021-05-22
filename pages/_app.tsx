@@ -1,8 +1,8 @@
+import { CookiesProvider } from 'react-cookie';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { ModalProvider } from 'styled-react-modal';
 
-import { AuthProvider } from '../app/auth/contexts/authProvider';
 import { appWithTranslation } from '../app/shared/config/i18next';
 import ApolloWrapper from '../app/shared/helpers/ApolloWrapper';
 import defaultTheme from '../app/shared/styles/theme';
@@ -37,7 +37,7 @@ body {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
+    <CookiesProvider>
       <ApolloWrapper initialApolloState={pageProps.initialApolloState}>
         <ThemeProvider theme={defaultTheme}>
           <ModalProvider>
@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }) {
           <ToastContainer />
         </ThemeProvider>
       </ApolloWrapper>
-    </AuthProvider>
+    </CookiesProvider>
   );
 }
 

@@ -11,6 +11,7 @@ import Margin from '../../shared/elements/Margin';
 import PacManSpinner from '../../shared/elements/PacManSpinner';
 import Text from '../../shared/elements/Text';
 import When from '../../shared/elements/When';
+import { GAME_STATUS } from '../../shared/helpers/status';
 import useAddGameStatus from '../hooks/useAddGameStatus';
 import Bookshelf from '../icons/Bookshelf';
 import GameController from '../icons/GameController';
@@ -41,7 +42,7 @@ const ModalBody = styled.div`
   height: 90%;
 `;
 
-const StatusButton = styled.div`
+const StatusButton = styled.div<{ disabled?: boolean }>`
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   margin: 16px;
   border: ${({ disabled, ...props }) =>
@@ -103,19 +104,31 @@ const AddGameToListModal = (props: Props) => {
       <ModalBody>
         <When expr={!loading}>
           <When expr={authToken}>
-            <StatusButton onClick={handleAddGameStatus(1)} disabled={status === 'to play'}>
+            <StatusButton
+              onClick={handleAddGameStatus(GAME_STATUS.toPlay)}
+              disabled={status === 'to play'}
+            >
               <Bookshelf size="90px" />
               <p>{t('common:to play')}</p>
             </StatusButton>
-            <StatusButton onClick={handleAddGameStatus(2)} disabled={status === 'playing'}>
+            <StatusButton
+              onClick={handleAddGameStatus(GAME_STATUS.playing)}
+              disabled={status === 'playing'}
+            >
               <GameController size="90px" />
               <p>{t('common:playing')}</p>
             </StatusButton>
-            <StatusButton onClick={handleAddGameStatus(3)} disabled={status === 'completed'}>
+            <StatusButton
+              onClick={handleAddGameStatus(GAME_STATUS.completed)}
+              disabled={status === 'completed'}
+            >
               <Trophy size="90px" />
               <p>{t('common:completed')}</p>
             </StatusButton>
-            <StatusButton onClick={handleAddGameStatus(4)} disabled={status === 'abandoned'}>
+            <StatusButton
+              onClick={handleAddGameStatus(GAME_STATUS.abandoned)}
+              disabled={status === 'abandoned'}
+            >
               <Web size="90px" />
               <p>{t('common:abandoned')}</p>
             </StatusButton>

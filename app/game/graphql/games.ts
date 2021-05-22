@@ -1,5 +1,34 @@
 import { gql } from '@apollo/client';
 
+export const GET_GAME_BY_STATUS = gql`
+  query gamesByStatus($statusId: Int) {
+    gamesByStatus(statusId: $statusId) {
+      ... on GamesByStatus {
+        games {
+          name
+          id
+          cover
+          thumbnail
+          genres {
+            id
+            name
+          }
+          platforms {
+            id
+            name
+            abbreviation
+          }
+          status
+        }
+        count
+      }
+      ... on Unauthorized {
+        reason
+      }
+    }
+  }
+`;
+
 export const SEARCH_GAME_QUERY = gql`
   query game($search: String!, $platforms: [Int], $genres: [Int], $limit: Int, $offset: Int) {
     game(search: $search, platforms: $platforms, genres: $genres, limit: $limit, offset: $offset) {
