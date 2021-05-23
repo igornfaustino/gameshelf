@@ -1,6 +1,6 @@
 import { CookiesProvider } from 'react-cookie';
 import { ToastContainer } from 'react-toastify';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { ModalProvider } from 'styled-react-modal';
 
 import { appWithTranslation } from '../app/shared/config/i18next';
@@ -35,6 +35,10 @@ body {
 }
 `;
 
+const StyledToastContainer = styled(ToastContainer)`
+  margin-top: ${(props) => props.theme.constants.headerHeight};
+`;
+
 function MyApp({ Component, pageProps }) {
   return (
     <CookiesProvider>
@@ -44,7 +48,7 @@ function MyApp({ Component, pageProps }) {
             <GlobalStyle />
             <Component {...pageProps} />
           </ModalProvider>
-          <ToastContainer />
+          <StyledToastContainer />
         </ThemeProvider>
       </ApolloWrapper>
     </CookiesProvider>
