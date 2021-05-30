@@ -22,12 +22,14 @@ const SideBarLayout = styled.div`
 `;
 
 const SideBar = styled.div`
+  min-width: 200px;
   width: 200px;
   height: 100%;
   border-right: 1px solid ${(props) => props.theme.colors.separator};
 `;
 
 const Option = styled.div<{ active?: boolean }>`
+  width: 200px;
   background-color: ${(props) => (props.active ? props.theme.colors.primary : 'transparent')};
   padding: 8px;
   color: ${(props) =>

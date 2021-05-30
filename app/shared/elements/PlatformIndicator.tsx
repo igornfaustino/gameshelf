@@ -27,7 +27,7 @@ const PlatformIndicator = (props: Props) => {
   return (
     <PlatformIndicatorContainer>
       {platforms?.map((platform) => (
-        <Tag>{platform.abbreviation || platform.name}</Tag>
+        <Tag key={platform.name}>{platform.abbreviation || platform.name}</Tag>
       ))}
     </PlatformIndicatorContainer>
   );
