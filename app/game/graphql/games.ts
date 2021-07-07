@@ -126,3 +126,43 @@ export const ADD_GAME_STATUS = gql`
     }
   }
 `;
+
+export const GET_HOME_GAMES = gql`
+  {
+    home {
+      releases {
+        id
+        name
+        cover
+        thumbnail
+        platforms {
+          id
+          name
+          abbreviation
+        }
+        genres {
+          id
+          name
+        }
+        status
+      }
+
+      popular {
+        id
+        name
+        cover
+        thumbnail
+        platforms {
+          id
+          name
+          abbreviation
+        }
+        genres {
+          id
+          name
+        }
+        status
+      }
+    }
+  }
+`;

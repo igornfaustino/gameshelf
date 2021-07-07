@@ -1,40 +1,60 @@
+import styled from 'styled-components';
+
+import Game from '../app/game/components/Game';
+import GameCarousel from '../app/game/components/GameCarousel';
+import { GET_HOME_GAMES } from '../app/game/graphql/games';
+import useHomeGames from '../app/game/hooks/useHomeGames';
+import { initializeApollo } from '../app/shared/config/apolloClient';
 import { useTranslation } from '../app/shared/config/i18next';
-import BaseLayout from '../app/shared/templates/BaseLayout';
+import Space from '../app/shared/elements/Space';
+import DashboardLayout from '../app/shared/templates/DashboardLayout';
+
+const Banner = styled.div`
+  background-color: ${(props) => props.theme.colors.header};
+  color: ${(props) => props.theme.colors.fontWhiter};
+  text-align: center;
+  padding: 16px;
+  font-size: 24px;
+`;
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
+  const { popular, releases } = useHomeGames();
+
   return (
-    <BaseLayout>
-      <h1>
-        {t('title')}
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+    <DashboardLayout>
+      <p>{t('common:last releases')}</p>
+      <GameCarousel cardWidth={260}>
+        {releases.map((game) => (
+          <Game {...game} key={game.id} />
+        ))}
+      </GameCarousel>
 
-      <p>
-        Get started by editing <code>pages/index.js</code>
-      </p>
+      <Space y={30} />
+      <Banner>{t('common:find new games and manage your life')}</Banner>
+      <Space y={1} />
 
-      <div>
-        <a href="https://nextjs.org/docs">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a href="https://github.com/vercel/next.js/tree/master/examples">
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">
-          <h3>Deploy &rarr;</h3>
-          <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-        </a>
-      </div>
-    </BaseLayout>
+      <p>{t('common:popular games')}</p>
+      <GameCarousel cardWidth={260}>
+        {popular.map((game) => (
+          <Game {...game} key={game.id} />
+        ))}
+      </GameCarousel>
+    </DashboardLayout>
   );
+}
+
+export async function getStaticProps() {
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query({
+    query: GET_HOME_GAMES,
+  });
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+    revalidate: 360,
+  };
 }
