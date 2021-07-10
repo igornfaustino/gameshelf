@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import styled from 'styled-components';
 
@@ -25,28 +25,6 @@ type Props = {
 const GameCarousel = (props: Props) => {
   const { children: cards, cardWidth = 200 } = props;
   const carouselRef = useRef<HTMLDivElement>(null);
-
-  const [firstCardIndex, setFirstCardIndex] = useState(0);
-  const [carouselWidth, setCarouselWidth] = useState<number | undefined>(undefined);
-
-  const cardsPerHorse = Math.max(1, Math.floor((carouselWidth ?? 0) / cardWidth));
-
-  useEffect(() => {
-    const updateCarouselWidth = () => {
-      setCarouselWidth(carouselRef.current?.offsetWidth ?? 0);
-    };
-
-    const onResize = () => {
-      updateCarouselWidth();
-    };
-
-    window.addEventListener('resize', onResize);
-    updateCarouselWidth();
-
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, []);
 
   return (
     <Carousel ref={carouselRef}>
