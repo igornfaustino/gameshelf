@@ -12,7 +12,7 @@ import useAuthToken from '../../auth/hooks/useAuthToken';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-const httpLink = new HttpLink({ uri: process.env.SERVER_URL });
+const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_SERVER_URL });
 
 const authMiddleware = (authToken) =>
   new ApolloLink((operation, forward) => {
