@@ -5,9 +5,9 @@ import styled from 'styled-components';
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
-> & { error?: string; ref: React.ForwardedRef<unknown> };
+> & { error?: string; ref: React.ForwardedRef<HTMLInputElement> };
 
-export const StyledInput = styled.input`
+export const StyledInput = styled.input<Props>`
   width: 100%;
   height: ${(props) => props.theme.constants.inputHeight};
   padding: 8px;
@@ -39,7 +39,7 @@ const InputGroup = styled.div`
   margin-bottom: 8px;
 `;
 
-const BasicInput = React.forwardRef((props: Props, ref) => {
+const BasicInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { error } = props;
 
   return (

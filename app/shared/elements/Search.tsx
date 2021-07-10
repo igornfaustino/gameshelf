@@ -19,7 +19,7 @@ const SearchForm = styled.form`
   width: 400px;
 `;
 
-const SearchButton = styled.button`
+const SearchButton = styled.button<{ error?: boolean }>`
   border: 1px solid #d9d9d9;
   border-color: ${(props) => props.error && props.theme.colors.error};
   border-radius: 0px 2px 2px 0px;
