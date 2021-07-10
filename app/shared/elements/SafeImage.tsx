@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Image from 'next/image';
 import styled from 'styled-components';
 
 import Skeleton from './Skeleton';
@@ -52,14 +53,26 @@ const StyledSkeleton = styled(Skeleton)`
 type Props = {
   src: string;
   thumb: string;
+  ssr?: boolean;
 };
 
 const SafeGameImage = (props: Props) => {
-  const { src, thumb } = props;
+  const { src, thumb, ssr } = props;
   const [imageLoaded, setImageLoaded] = useState(false);
   const [thumbLoaded, setThumbLoaded] = useState(false);
 
   if (!src) return <ImageWrapper />;
+  if (ssr)
+    return (
+      <ImageWrapper>
+        <GameImage
+          onLoad={() => {
+            setImageLoaded(true);
+          }}
+          src={src}
+        />
+      </ImageWrapper>
+    );
 
   return (
     <ImageWrapper>

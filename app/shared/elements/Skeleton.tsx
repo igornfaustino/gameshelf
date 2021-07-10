@@ -17,7 +17,7 @@ const Skeleton = styled.div<Props>`
     display: block;
     content: '';
     position: absolute;
-    width: 100%;
+    width: 100px;
     height: 100%;
     transform: translateX(-100%);
     background: -webkit-gradient(

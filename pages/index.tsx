@@ -26,7 +26,7 @@ export default function Home() {
       <p>{t('common:last releases')}</p>
       <GameCarousel cardWidth={260}>
         {releases.map((game) => (
-          <Game {...game} key={game.id} />
+          <Game {...game} key={game.id} ssr />
         ))}
       </GameCarousel>
 
@@ -37,7 +37,7 @@ export default function Home() {
       <p>{t('common:popular games')}</p>
       <GameCarousel cardWidth={260}>
         {popular.map((game) => (
-          <Game {...game} key={game.id} />
+          <Game {...game} key={game.id} ssr />
         ))}
       </GameCarousel>
     </DashboardLayout>

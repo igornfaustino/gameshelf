@@ -50,10 +50,10 @@ const GameName = styled.p`
   text-overflow: ellipsis;
 `;
 
-type Props = GameType;
+type Props = GameType & { ssr?: boolean };
 
 const Game = (props: Props) => {
-  const { cover, name, thumbnail, status, id, platforms } = props;
+  const { cover, name, thumbnail, status, id, platforms, ssr } = props;
 
   const { handleRemoveGameStatus, loading } = useRemoveGameStatus(id);
 
@@ -74,7 +74,7 @@ const Game = (props: Props) => {
             </When>
           </StatusIndicator>
         </When>
-        <SafeGameImage src={cover} thumb={thumbnail} />
+        <SafeGameImage src={cover} thumb={thumbnail} ssr={ssr} />
         <GameName>{name}</GameName>
         <PlatformIndicator platforms={platforms} />
         <When expr={!!status}>
