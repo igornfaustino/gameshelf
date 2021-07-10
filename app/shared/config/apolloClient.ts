@@ -10,11 +10,9 @@ import {
 
 import useAuthToken from '../../auth/hooks/useAuthToken';
 
-const URL = 'http://localhost:8000/graphql';
-
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-const httpLink = new HttpLink({ uri: URL });
+const httpLink = new HttpLink({ uri: process.env.SERVER_URL });
 
 const authMiddleware = (authToken) =>
   new ApolloLink((operation, forward) => {
