@@ -13,7 +13,7 @@ import Trophy from '../../app/game/icons/Trophy';
 import Web from '../../app/game/icons/Web';
 import { GameType } from '../../app/game/types/game';
 import { useTranslation } from '../../app/shared/config/i18next';
-import { GAME_STATUS } from '../../app/shared/helpers/status';
+import { SITUATIONS } from '../../app/shared/helpers/status';
 import DashboardLayout from '../../app/shared/templates/DashboardLayout';
 
 const SideBarLayout = styled.div`
@@ -78,9 +78,9 @@ export default function Home() {
 
   const { loading, data } = useQuery<GameByStatusType>(GET_GAME_BY_STATUS, {
     variables: {
-      statusId: GAME_STATUS[pageStatusId],
+      statusId: SITUATIONS[pageStatusId],
     },
-    skip: !(pageStatusId in GAME_STATUS),
+    skip: !(pageStatusId in SITUATIONS),
     fetchPolicy: 'cache-and-network',
     ssr: false,
   });
@@ -90,8 +90,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!(pageStatusId in GAME_STATUS)) {
-      router.push(`/status/${Object.keys(GAME_STATUS)[0]}`);
+    if (!(pageStatusId in SITUATIONS)) {
+      router.push(`/status/${Object.keys(SITUATIONS)[0]}`);
     }
   }, [router, pageStatusId]);
 

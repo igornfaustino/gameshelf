@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -8,11 +8,9 @@ import useAuthToken from '../../auth/hooks/useAuthToken';
 import { useTranslation } from '../../shared/config/i18next';
 import Button from '../../shared/elements/Button';
 import Margin from '../../shared/elements/Margin';
-import PacManSpinner from '../../shared/elements/PacManSpinner';
 import Text from '../../shared/elements/Text';
 import When from '../../shared/elements/When';
-import { GAME_STATUS } from '../../shared/helpers/status';
-import useAddGameStatus from '../hooks/useAddGameStatus';
+import { SITUATIONS } from '../../shared/helpers/status';
 import Bookshelf from '../icons/Bookshelf';
 import GameController from '../icons/GameController';
 import Trophy from '../icons/Trophy';
@@ -76,85 +74,65 @@ const LoginButton = styled.div`
 type Props = {
   visible: boolean;
   setVisible(boolean): void;
-  gameId: string;
   name: string;
   status: string;
+  handleAddGameStatus: (status: number) => void;
 };
 
 const AddGameToListModal = (props: Props) => {
-  const { visible, setVisible, gameId, name, status } = props;
+  const { visible, setVisible, name, status, handleAddGameStatus } = props;
   const { t } = useTranslation('common');
   const { authToken } = useAuthToken();
 
-  const { handleAddGameStatus, result, loading } = useAddGameStatus(gameId);
-
   const handleClose = () => {
-    if (loading) return;
     setVisible(false);
   };
 
-  useEffect(() => {
-    if (!result) return;
-    setVisible(false);
-  }, [result, setVisible]);
+  const onClick = (statusId: number) => () => {
+    handleAddGameStatus(statusId);
+    handleClose();
+  };
 
   return (
     <StyledModal isOpen={visible} onBackgroundClick={handleClose} onEscapeKeydown={handleClose}>
       <ModalTitle>{name}</ModalTitle>
       <ModalBody>
-        <When expr={!loading}>
-          <When expr={authToken}>
-            <StatusButton
-              onClick={handleAddGameStatus(GAME_STATUS.toPlay)}
-              disabled={status === 'to play'}
-            >
-              <Bookshelf size="90px" />
-              <p>{t('common:to play')}</p>
-            </StatusButton>
-            <StatusButton
-              onClick={handleAddGameStatus(GAME_STATUS.playing)}
-              disabled={status === 'playing'}
-            >
-              <GameController size="90px" />
-              <p>{t('common:playing')}</p>
-            </StatusButton>
-            <StatusButton
-              onClick={handleAddGameStatus(GAME_STATUS.completed)}
-              disabled={status === 'completed'}
-            >
-              <Trophy size="90px" />
-              <p>{t('common:completed')}</p>
-            </StatusButton>
-            <StatusButton
-              onClick={handleAddGameStatus(GAME_STATUS.abandoned)}
-              disabled={status === 'abandoned'}
-            >
-              <Web size="90px" />
-              <p>{t('common:abandoned')}</p>
-            </StatusButton>
-          </When>
-          <When expr={!authToken}>
-            <LoginButton>
-              <Text>{t('common:needs to be logged in')}</Text>
-              <Margin value={32} />
-              <Link href="/login">
-                <Button type="submit" block textVariant="light">
-                  {t('common:login')}
-                </Button>
-              </Link>
-              <Text center small>
-                {t('common:or')}
-              </Text>
-              <Link href="/singup">
-                <Button type="button" block white bordered>
-                  {t('common:not registered')}
-                </Button>
-              </Link>
-            </LoginButton>
-          </When>
+        <When expr={authToken}>
+          <StatusButton onClick={onClick(SITUATIONS.toPlay)} disabled={status === 'to play'}>
+            <Bookshelf size="90px" />
+            <p>{t('common:to play')}</p>
+          </StatusButton>
+          <StatusButton onClick={onClick(SITUATIONS.playing)} disabled={status === 'playing'}>
+            <GameController size="90px" />
+            <p>{t('common:playing')}</p>
+          </StatusButton>
+          <StatusButton onClick={onClick(SITUATIONS.completed)} disabled={status === 'completed'}>
+            <Trophy size="90px" />
+            <p>{t('common:completed')}</p>
+          </StatusButton>
+          <StatusButton onClick={onClick(SITUATIONS.abandoned)} disabled={status === 'abandoned'}>
+            <Web size="90px" />
+            <p>{t('common:abandoned')}</p>
+          </StatusButton>
         </When>
-        <When expr={loading}>
-          <PacManSpinner size="8rem" />
+        <When expr={!authToken}>
+          <LoginButton>
+            <Text>{t('common:needs to be logged in')}</Text>
+            <Margin value={32} />
+            <Link href="/login">
+              <Button type="submit" block textVariant="light">
+                {t('common:login')}
+              </Button>
+            </Link>
+            <Text center small>
+              {t('common:or')}
+            </Text>
+            <Link href="/singup">
+              <Button type="button" block white bordered>
+                {t('common:not registered')}
+              </Button>
+            </Link>
+          </LoginButton>
         </When>
       </ModalBody>
     </StyledModal>

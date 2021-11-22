@@ -9,6 +9,7 @@ import PacManSpinner from '../../shared/elements/PacManSpinner';
 import PlatformIndicator from '../../shared/elements/PlatformIndicator';
 import SafeGameImage from '../../shared/elements/SafeImage';
 import When from '../../shared/elements/When';
+import useAddGameStatus from '../hooks/useAddGameStatus';
 import useRemoveGameStatus from '../hooks/useRemoveGameStatus';
 import { GameType } from '../types/game';
 import AddGameToListModal from './AddGameToListModal';
@@ -55,15 +56,18 @@ type Props = GameType & { ssr?: boolean };
 const Game = (props: Props) => {
   const { cover, name, thumbnail, status, id, platforms, ssr } = props;
 
-  const { handleRemoveGameStatus, loading } = useRemoveGameStatus(id);
+  const { handleRemoveGameStatus, loading: removing } = useRemoveGameStatus(id, name);
+  const { handleAddGameStatus, loading: adding } = useAddGameStatus(id, name);
 
   const { t } = useTranslation('common');
   const [isVisible, setIsVisible] = useState(false);
 
+  const loading = removing || adding;
+
   return (
     <>
       <Card>
-        <When expr={!!status}>
+        <When expr={!!status || adding}>
           <StatusIndicator>
             <When expr={!loading}>
               <RemoveBtn onClick={handleRemoveGameStatus} />
@@ -91,9 +95,9 @@ const Game = (props: Props) => {
       <AddGameToListModal
         visible={isVisible}
         setVisible={setIsVisible}
-        gameId={id}
         name={name}
         status={status}
+        handleAddGameStatus={handleAddGameStatus}
       />
     </>
   );

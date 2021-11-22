@@ -18,8 +18,8 @@
   "total": "Total",
 
   "success": {
-    "game_removed": "Jogo removido com sucesso",
-    "game_added": "Jogo adicionado com sucesso"
+    "game_removed": "{{game}} removido com sucesso",
+    "game_added": "{{game}} adicionado a {{situation}}"
   },
   "errors": {
     "duplicate_user": "Ops... Usuário já cadastrado!",

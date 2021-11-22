@@ -8,7 +8,7 @@ import useLogout from '../../auth/hooks/useLogout';
 import { useTranslation } from '../../shared/config/i18next';
 import { REMOVE_GAME_STATUS } from '../graphql/games';
 
-const useRemoveGameStatus = (gameId) => {
+const useRemoveGameStatus = (gameId: number, name: string) => {
   const { push } = useRouter();
   const logout = useLogout();
   const { t } = useTranslation('common');
@@ -29,7 +29,7 @@ const useRemoveGameStatus = (gameId) => {
       });
       return;
     }
-    toast.success(t('common:success.game_removed'));
+    toast.success(t('common:success.game_removed', { game: name.toUpperCase() }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
