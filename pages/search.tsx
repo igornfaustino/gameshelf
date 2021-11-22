@@ -32,7 +32,7 @@ const ControlArea = styled.div`
   }
 `;
 
-const Search = (props) => {
+const Search = () => {
   const { t } = useTranslation(['common']);
   const router = useRouter();
   const { limit, offset, onPageChange, resetOffset } = usePagination();
