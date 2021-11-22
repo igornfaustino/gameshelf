@@ -23,7 +23,7 @@ const GamesArea = (props) => {
   if (loading) {
     const gamesPlaceholder = [];
     for (let i = 0; i < limit; i++) {
-      gamesPlaceholder.push(<Skeleton paddingTop="150%" key={i} />);
+      gamesPlaceholder.push(<Skeleton y="40vh" key={i} />);
     }
     return <GamesAreaWrapper>{gamesPlaceholder}</GamesAreaWrapper>;
   }
