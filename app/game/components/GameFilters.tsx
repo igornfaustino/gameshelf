@@ -15,6 +15,7 @@ const FilterGroup = styled.form`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  width: 100%;
 `;
 
 const ButtonWrapper = styled.div`

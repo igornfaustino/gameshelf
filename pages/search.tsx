@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 import Game from '../app/game/components/Game';
 import GameFilters, { FilterSubmitCallback } from '../app/game/components/GameFilters';
@@ -8,11 +9,31 @@ import GamesArea from '../app/game/components/GamesArea';
 import { ALL_PLATFORMS, ALL_GENRES } from '../app/game/graphql/games';
 import useGameQuery from '../app/game/hooks/useGameQuery';
 import { initializeApollo } from '../app/shared/config/apolloClient';
+import { useTranslation } from '../app/shared/config/i18next';
 import Pagination from '../app/shared/elements/Pagination';
+import When from '../app/shared/elements/When';
 import usePagination from '../app/shared/hooks/usePagination';
 import DashboardLayout from '../app/shared/templates/DashboardLayout';
 
+const ControlArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  flex-direction: row;
+
+  p {
+    min-width: 100px;
+    margin: 0;
+
+    span {
+      font-weight: bold;
+    }
+  }
+`;
+
 const Search = (props) => {
+  const { t } = useTranslation(['common']);
   const router = useRouter();
   const { limit, offset, onPageChange, resetOffset } = usePagination();
 
@@ -40,7 +61,15 @@ const Search = (props) => {
 
   return (
     <DashboardLayout>
-      <GameFilters query={router.query.q} onSubmit={onFilterSubmit} />
+      <ControlArea>
+        <When expr={!!count}>
+          <p>
+            {`${t('common:total')}: `}
+            <span>{count}</span>
+          </p>
+        </When>
+        <GameFilters query={router.query.q} onSubmit={onFilterSubmit} />
+      </ControlArea>
 
       <br />
 
