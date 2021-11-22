@@ -81,7 +81,7 @@ const GameFilters = (props: Props) => {
     <FilterGroup onSubmit={handleSubmit(handleFormSubmit)}>
       <SelectWrapper>
         {loading ? (
-          <Skeleton height={defaultTheme.constants.inputHeight} />
+          <Skeleton y={defaultTheme.constants.inputHeight} />
         ) : (
           <Controller
             control={control}
@@ -100,7 +100,7 @@ const GameFilters = (props: Props) => {
       </SelectWrapper>
       <SelectWrapper>
         {loading ? (
-          <Skeleton height={defaultTheme.constants.inputHeight} />
+          <Skeleton y={defaultTheme.constants.inputHeight} />
         ) : (
           <Controller
             control={control}
@@ -119,7 +119,7 @@ const GameFilters = (props: Props) => {
       </SelectWrapper>
       <ButtonWrapper>
         {loading ? (
-          <Skeleton height={defaultTheme.constants.inputHeight} />
+          <Skeleton y={defaultTheme.constants.inputHeight} />
         ) : (
           <Button primary textVariant="light" block>
             {t('button:filter')}
